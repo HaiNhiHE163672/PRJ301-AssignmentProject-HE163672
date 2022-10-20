@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class TimeSlot {
     private int id;
     private String description;
+    private String name;
     private ArrayList<Session> sessions = new ArrayList<>();
 
     public int getId() {
@@ -31,6 +32,14 @@ public class TimeSlot {
         this.description = description;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public ArrayList<Session> getSessions() {
         return sessions;
     }
@@ -38,5 +47,7 @@ public class TimeSlot {
     public void setSessions(ArrayList<Session> sessions) {
         this.sessions = sessions;
     }
+
+    
     
 }

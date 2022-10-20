@@ -27,12 +27,12 @@ public class SessionDBContext extends DBContext<Session>{
     public ArrayList<Session> filter(int stdid, Date from, Date to) {
         ArrayList <Session> sessions = new ArrayList<>();
         try {
-        String sql = "SELECT ses.sesid,ses.[date],ses.[index],\n"
-                + "                      ses.attanded,std.stdid,\n"
-                + "                      std.stdname,g.gid,g.gname \n"
+        String sql = "SELECT ses.sesid,ses.[date],ses.[index]\n"
+                + "                      ,ses.attanded,std.stdid\n"
+                + "                      ,std.stdname,g.gid,g.gname\n"
                 + "                      ,sub.subid,sub.subname\n"
-                + "                        ,r.rid,r.rname\n"
-                + "                    	,t.tid,t.[description]\n"
+                + "                      ,r.rid,r.rname\n"
+                + "                    	 ,t.tid,t.[description],t.tname\n"
                 + "                    FROM [Session] ses \n"
                 + "                    		INNER JOIN [Group] g ON g.gid = ses.gid\n"
                 + "			        INNER JOIN Student_Group sg ON  g.gid = sg.gid\n"
@@ -68,7 +68,7 @@ public class SessionDBContext extends DBContext<Session>{
                 std.setName(rs.getString("stdname"));
                 
                 
-                 g.setId(rs.getInt("gid"));
+                g.setId(rs.getInt("gid"));
                 g.setName(rs.getString("gname"));
                 session.setGroup(g);
                 
@@ -82,6 +82,7 @@ public class SessionDBContext extends DBContext<Session>{
                 
                 t.setId(rs.getInt("tid"));
                 t.setDescription(rs.getString("description"));
+                t.setName(rs.getString("tname"));
                 session.setSlot(t);
                 sessions.add(session);
                 

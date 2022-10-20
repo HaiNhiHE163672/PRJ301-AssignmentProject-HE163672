@@ -20,7 +20,6 @@ import model.assignment.Student;
 import model.assignment.TimeSlot;
 import util.DateTimeHelper;
 
-
 /**
  *
  * @author User
@@ -38,7 +37,7 @@ public class TimeTableController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int stdid = Integer.parseInt(request.getParameter("stdid"));
+       int stdid = Integer.parseInt(request.getParameter("stdid"));
         String raw_from = request.getParameter("from");
         String raw_to = request.getParameter("to");
         java.sql.Date from = null;
@@ -60,7 +59,9 @@ public class TimeTableController extends HttpServlet {
         
         request.setAttribute("from", from);
         request.setAttribute("to", to);
-        request.setAttribute("dates", DateTimeHelper.getDateList(from, to));
+        request.setAttribute("year", DateTimeHelper.getYear(from) );
+        request.setAttribute("dates", DateTimeHelper.getDateList(from,to));
+
         
         TimeSlotDBContext slotDB = new TimeSlotDBContext();
         ArrayList<TimeSlot> slots = slotDB.list();
@@ -73,6 +74,7 @@ public class TimeTableController extends HttpServlet {
         StudentDBContext stuDB = new StudentDBContext();
         Student student = stuDB.get(stdid);
         request.setAttribute("student", student);
+        
         
         request.getRequestDispatcher("../view/student/timetable.jsp").forward(request, response);
     }

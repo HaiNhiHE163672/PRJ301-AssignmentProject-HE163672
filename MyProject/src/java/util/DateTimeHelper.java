@@ -15,11 +15,10 @@ import java.util.Date;
  * @author User
  */
 public class DateTimeHelper {
-    public static Date toDate(String value, String format) throws ParseException
-    {
+       public static Date toDate(String value, String format) throws ParseException {
         return new SimpleDateFormat(format).parse(value);
     }
-    
+
     public static Date removeTime(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -27,21 +26,21 @@ public class DateTimeHelper {
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
+        
         return cal.getTime();
     }
-    
-    public static java.util.Date toDateUtil (java.sql.Date d){
+
+    public static java.util.Date toDateUtil(java.sql.Date d) {
         java.util.Date x = new java.util.Date(d.getTime());
         x = removeTime(x);
         return x;
     }
-    
+
     public static java.sql.Date toDateSql(java.util.Date d) {
-        d = removeTime(d);
+        d= removeTime(d);
         return new java.sql.Date(d.getTime());
-                
     }
-    
+
     public static int getDayofWeek(java.util.Date d) {
         Calendar c = Calendar.getInstance();
         c.setTime(d);
@@ -50,15 +49,13 @@ public class DateTimeHelper {
     }
     
     public static int getYear(java.util.Date d) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(d);
-        int dateYear = calendar.get(Calendar.YEAR);
-        return dateYear;
-
+        Calendar c = Calendar.getInstance();
+        c.setTime(d);
+        int year = c.get(Calendar.YEAR);
+        return year;
     }
- 
     
-
+    
     public static Date addDays(java.util.Date d, int days)
     {
         Calendar cal = Calendar.getInstance(); 
@@ -66,6 +63,7 @@ public class DateTimeHelper {
         cal.add(Calendar.DATE, days);
         return cal.getTime();
     }
+    
     
     public static ArrayList<java.sql.Date> 
         getDateList(java.sql.Date from, java.sql.Date to)
@@ -84,6 +82,7 @@ public class DateTimeHelper {
         }
         return dates;
     }
+        
     
     public static String getDayNameofWeek(java.sql.Date s) {
         java.util.Date d = toDateUtil(s);
@@ -111,6 +110,7 @@ public class DateTimeHelper {
          System.out.println(a + " " + b +" " +e_a.compareTo(e_b));
         return e_a.compareTo(e_b);
     }
+    
      
     
     
