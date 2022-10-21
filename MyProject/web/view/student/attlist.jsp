@@ -1,6 +1,6 @@
 <%-- 
-    Document   : timetable
-    Created on : Oct 13, 2022, 10:39:39 AM
+    Document   : attlist
+    Created on : Oct 21, 2022, 10:31:16 AM
     Author     : User
 --%>
 
@@ -12,7 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <style>
+         <style>
             /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
@@ -37,10 +37,8 @@
 	font-size: 20px;
 }
         </style>
-
     </head>
     <body>
-        
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
@@ -66,24 +64,11 @@
                 </table>
                 </div>
             </div>
-            
             <style>
-                .d{
-                    margin-top:10px;
-                    margin-bottom: 20px;
-                }
-                .d1{
-                    float: left; 
-                    margin-right: 700px;
-                }
-                .d2 {
-                    text-decoration: none;
-                }
+                
                 .a {
                     margin-top:10px;
                     margin-bottom: 50px;
-                    background-color: rgb(193, 191, 191);
-                    padding: 10px;
                     
                 }
                 .a1 {
@@ -108,7 +93,7 @@
             <div class="a">
                 <div class="a1">
                     <a href="">
-                        <span>${requestScope.student.name}</span>
+                        <span>${ses.lecturer.name}</span>
                     </a> | 
                     <a href="">logout</a> |
                     <span> CAMPUS: FPTU-Hòa Lạc</span>
@@ -116,145 +101,89 @@
                 <div class="a2">
                     <span>
                         <a href='#'>Home</a>|
-                        <b>View Schedule</b>
+                        <a href="">Take Attendance</a>|
+                        <b>Add</b>
+                        
                     </span>
                 </div>
             </div>
-            
-            
-            
-        <div>
-            <h1>Activities for ${requestScope.student.name}</h1>  
-        </div>
-            <p>
-        <b>Note</b>: These activities do not include extra-curriculum activities, such as
-        club activities ...
-    </p>
-    <p>
-        <b>Chú thích</b>: Các hoạt động trong bảng dưới không bao gồm hoạt động ngoại khóa,
-        ví dụ như hoạt động câu lạc bộ ...
-    </p>
-    <div>
-                <p>Các phòng bắt đầu bằng AL thuộc tòa nhà Alpha. VD: AL...</p>
-                <p>Các phòng bắt đầu bằng BE thuộc tòa nhà Beta. VD: BE,..</p>
-                <p>Các phòng bắt đầu bằng G thuộc tòa nhà Gamma. VD: G201,...</p>
-                <p>Các phòng tập bằng đầu bằng R thuộc khu vực sân tập Vovinam.</p>
-                <p>Các phòng bắt đầu bằng DE thuộc tòa nhà Delta. VD: DE,..</p>
-                <p>Little UK (LUK) thuộc tầng 5 tòa nhà Delta</p>
-                    
+            <div>
+                <h1>Take Attendance</h1>  
             </div>
-    
-    <style>
-            .b table {
-                font-family: arial, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
-            }
-            td {
-                text-align: left;
-                padding: 8px;
-            }
-            .b td, th {
-                border: 1px solid #dddddd;
-                text-align: left;
-                padding: 8px;
-            }
-            .b th {
-                background-color: rgb(124, 156, 190);
-            } 
-            .b tbody span {
-                    padding: 2px;
-                    color: white;
-                    background-color: #0fcc45;
-                    border-radius: 5px;
-            }
-            .b1 font {
-                border: none;
-                outline: none;
-                padding: 3px;
-                
-                background-color: #0fcc45;
-                border-radius: 5px;
-            }
-        </style>
-        <div class="b">
-        <table>
-            <thead>
-                <tr>
-                    <th rowspan="2">
-                        <form action="timetable" method="GET">
-                            <input type="hidden" name="stdid" value="${param.stdid}"/>
-                            Year: <select name="yid">
-                                <option value="${year}">${year - 3}</option>
-                                <option value="${year}">${year - 2}</option>
-                                <option value="${year}-1">${year - 1}</option>
-                                <option selected="checked" value="${year}">${year}</option>
-                                <option value="${year}">${year + 1}</option>
-                            </select><br/>
-                            From: <input type="date" name="from" value="${requestScope.from}"/>
-                            To: <input type="date" name="to" value="${requestScope.to}"/>
-                            <input type="submit" value="View"/> 
-                        </form>
-                    </th>
-               
-                    <c:forEach items="${requestScope.dates}" var="d"> 
-                    <th>${helper.getDayNameofWeek(d)}</th>
-                    </c:forEach>
-                </tr>    
-                <tr>
-                    <c:forEach items="${requestScope.dates}" var="d">
-                    <th>${d}</th>
-                    </c:forEach>
-                </tr>
-                
-            </thead>
-            <tbody>
- 
-                <c:forEach items="${requestScope.slots}" var="slot">
-                    <tr>
-                        <td>Slot ${slot.id}</td>  
-                        <c:forEach items="${requestScope.dates}" var="d">
-                        <td>
-                            <c:forEach items="${requestScope.sessions}" var="ses">
-                                <c:if test="${helper.compare(ses.date,d) eq 0 and (ses.slot.id eq slot.id)}">
-                                    <a href="att?id=${ses.id}">${ses.group.subject.name}</a>
-                                    <br/>
-                                     at ${ses.room.name}
-                                    <c:if test="${ses.attanded}">
-                                        <p>(<font color="green">attended</font>)</p>
-                                    </c:if>
-                                    <c:if test="${!ses.attanded}">
-                                        <p>(<font color="red">not yet</font>)</p>
-                                    </c:if>  
-                                        <p class="b1"><font color="white">(${slot.description})</font></p>
-                                </c:if>
-                                        
-                            </c:forEach>
-                        </td>
-                        
-                    </c:forEach>
-
-                    </tr>
-                </c:forEach>
+            <div>
+                <p> <span>Attendance for</span>
+                    <b>${requestScope.ses.group.subject.name}</b> at slot ${requestScope.ses.slot.id} on ${helper.getDayNameofWeek(ses.date)}day 
+                    ${requestScope.ses.date}, ${ses.group.sem}${ses.group.year}, at room ${requestScope.ses.room.name}.
+                    This is the session number ${ses.index} of the course.
+                </p>
+            </div>
+            <style>
+                  .b table {
+                        font-family: arial, sans-serif;
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+                    td {
+                        text-align: left;
+                        padding: 8px;
+                    }
+                    .b td, th {
+                        border: 1px solid #dddddd;
+                        text-align: left;
+                        padding: 8px;
+                    }
+                    .b th {
+                        background-color: rgb(124, 156, 190);
+                    } 
+            </style>
+            
+            <form action="activities.html" method="POST">
+            <div class="b">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>NO</th>
+                            <th>GROUP</th>
+                            <th>ROLLNUMBER</th>
+                            <th>FULLNAME</th>
+                            <th>ABSENT</th>
+                            <th>PRESENT</th>
+                            <th>COMMENT</th>
+                            <th>SHOW IMAGE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       <c:forEach items="${requestScope.ses.atts}" var="a" varStatus="loop">
+                 <tr>
+                    <td>${loop.index+1}</td>
+                    <td><a href="">${ses.group.name}</a></td>
+                    <td><a href="">${a.student.id}</a>
+                    <input type="hidden" name="stdid" value="${a.student.id}"/>
+                    </td>
+                    <td>${a.student.name}</td>
+                    <td><input type="radio"
+                               <c:if test="${a.present}">
+                               checked="checked"
+                               </c:if>
+                               name="present${a.student.id}" value="present" />Present</td>
+                    <td><input type="radio"
+                               <c:if test="${!a.present}">
+                               checked="checked"
+                               </c:if>
+                               name="present${a.student.id}" value="absent" />Absent</td>
+                    <td><input type="text" name="description${a.student.id}" value="${a.description}" /></td>
+                    <td>
+                        <p id="show image" onclick="show()">Show Image</p>
+                        <img src="../img/avatar.jpg" style="height:150px;width:150px;border-width:0px;"/> 
+                    </td>
+                </tr>   
                     
-            </tbody>    
-        </table>
-            <div class="c">
-                    <b>More note / Chú thích thêm</b>:
-                    <ul>
-                        <li>
-                            (<font color="green">attended</font>):
-                            ${requestScope.student.name} had attended this activity / ${requestScope.student.name} đã tham gia hoạt động này.
-                        </li>
-                        <li>
-                            (<font color="red">absent</font>):
-                            ${requestScope.student.name} had NOT attended this activity / ${requestScope.student.name} đã vắng mặt buổi này.
-                        </li>
-                        <li>
-                            (-): no data was given / chưa có dữ liệu.
-                        </li>
-                    </ul>
-                
+                </c:forEach>
+                        
+                    </tbody>
+                </table>
+                <input type="submit" value="Save"/>
+                </form>
             </div>
             <div>
                 <b>Mọi góp ý, thắc mắc xin liên hệ</b>:
@@ -263,10 +192,9 @@
                 <span> Điện thoại</span>: 09290133454
                 
             </div>
-    
+                
             
-    </div>
-    </div>
-        
+            
+        </div>
     </body>
 </html>

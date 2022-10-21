@@ -4,9 +4,25 @@
         <servlet-name>StudentTimetableController</servlet-name>
         <servlet-class>assignment.student.TimeTableController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LecturerAttController</servlet-name>
+        <servlet-class>assignment.lecturer.AttController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StudentAttListController</servlet-name>
+        <servlet-class>assignment.student.AttListController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>StudentTimetableController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LecturerAttController</servlet-name>
+        <url-pattern>/lecturer/takeatt</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StudentAttListController</servlet-name>
+        <url-pattern>/student/attlist</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
