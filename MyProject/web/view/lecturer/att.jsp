@@ -139,7 +139,8 @@
                     } 
             </style>
             
-            <form action="activities.html" method="POST">
+            <form action="takeatt" method="POST">
+            <input type="hidden" name="sesid" value="${param.id}"/>
             <div class="b">
                 <table>
                     <thead>
