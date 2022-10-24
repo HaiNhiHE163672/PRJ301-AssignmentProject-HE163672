@@ -6,6 +6,7 @@ package assignment.student;
 
 import dal.SessionDBContext;
 import dal.StudentDBContext;
+import dal.SubjectDBContext;
 import dal.TimeSlotDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -15,8 +16,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import model.assignment.Attandance;
+import model.assignment.Group;
 import model.assignment.Session;
 import model.assignment.Student;
+import model.assignment.Subject;
 import model.assignment.TimeSlot;
 
 /**
@@ -52,6 +55,11 @@ public class AttListController extends HttpServlet {
         Student student = stuDB.get(stdid);
         request.setAttribute("student", student);
         
+        int subid = Integer.parseInt(request.getParameter("subid"));
+        SubjectDBContext subDB = new SubjectDBContext();
+        ArrayList<Subject> subjects = subDB.filter(stdid,subid);
+        request.setAttribute("subjects", subjects);
+        
         
         request.getRequestDispatcher("../view/student/attlist.jsp").forward(request, response);
     }
@@ -84,16 +92,22 @@ public class AttListController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         Session ses = new Session();
-        ses.setId(Integer.parseInt(request.getParameter("sesid")));
+        Subject sub = new Subject();
+ 
+        sub.setId(Integer.parseInt(request.getParameter("subid")));
         String[] stdids = request.getParameterValues("stdid");
         for (String stdid : stdids) {
             Attandance a = new Attandance();
             Student s = new Student();
+            Group g = new Group();
+            
             a.setStudent(s);
             a.setDescription(request.getParameter("description" + stdid));
             a.setPresent(request.getParameter("present" + stdid).equals("present"));
             s.setId(Integer.parseInt(stdid));
+            g.setSubject(sub);
             ses.getAtts().add(a);
+            SubjectDBContext db = new SubjectDBContext();
         }
     }
 

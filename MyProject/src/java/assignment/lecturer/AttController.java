@@ -64,6 +64,7 @@ public class AttController extends HttpServlet {
             a.setPresent(request.getParameter("present" + stdid).equals("present"));
             s.setId(Integer.parseInt(stdid));
             ses.getAtts().add(a);
+            
         }
         SessionDBContext db = new SessionDBContext();
         db.update(ses);

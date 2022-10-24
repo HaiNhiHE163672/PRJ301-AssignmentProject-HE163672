@@ -39,7 +39,7 @@
         </style>
     </head>
     <body>
-        <div class="container">
+                 <div class="container">
             <div class="row">
                 <div class="col-md-8">
                     <h1><span>FPT University Academic Portal</span> </h1>
@@ -65,59 +65,6 @@
                 </div>
             </div>
             <style>
-                
-                .a {
-                    margin-top:10px;
-                    margin-bottom: 50px;
-                    
-                }
-                .a1 {
-                    float: right; 
-                    margin-right: 20px;
-                }
-                .a1 a, .a1 span {
-                    border: none;
-                    outline: none;
-                    padding: 4px;
-                    color: white;
-                    background-color: #0fcc45;
-                    border-radius: 5px;
-                }
-              
-                .a2 {
-                    text-decoration: none;
-                }
-                
-            </style>
-
-            <div class="a">
-                <div class="a1">
-                    <a href="">
-                        <span>${ses.lecturer.name}</span>
-                    </a> | 
-                    <a href="">logout</a> |
-                    <span> CAMPUS: FPTU-Hòa Lạc</span>
-                </div>
-                <div class="a2">
-                    <span>
-                        <a href='#'>Home</a>|
-                        <a href="">Take Attendance</a>|
-                        <b>Add</b>
-                        
-                    </span>
-                </div>
-            </div>
-            <div>
-                <h1>Take Attendance</h1>  
-            </div>
-            <div>
-                <p> <span>Attendance for</span>
-                    <b>${requestScope.ses.group.subject.name}</b> at slot ${requestScope.ses.slot.id} on ${helper.getDayNameofWeek(ses.date)}day 
-                    ${requestScope.ses.date}, ${ses.group.sem}${ses.group.year}, at room ${requestScope.ses.room.name}.
-                    This is the session number ${ses.index} of the course.
-                </p>
-            </div>
-            <style>
                   .b table {
                         font-family: arial, sans-serif;
                         border-collapse: collapse;
@@ -127,64 +74,167 @@
                         text-align: left;
                         padding: 8px;
                     }
-                    .b td, th {
+                    .b th {
                         border: 1px solid #dddddd;
                         text-align: left;
                         padding: 8px;
                     }
-                    .b th {
+                    .b2 td, .b2 th {
+                        border: 1px solid #dddddd;
+                        text-align: left;
+                        padding: 8px;
+                    }
+                    .b th, .b2 th {
                         background-color: rgb(124, 156, 190);
                     } 
             </style>
             
-            <form action="activities.html" method="POST">
-            <div class="b">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>NO</th>
-                            <th>GROUP</th>
-                            <th>ROLLNUMBER</th>
-                            <th>FULLNAME</th>
-                            <th>ABSENT</th>
-                            <th>PRESENT</th>
-                            <th>COMMENT</th>
-                            <th>SHOW IMAGE</th>
+            <form action="attlist" method="POST">
+                <input type="hidden" name="stdid" value="${param.stdid}"/>
+                <div class="row">
+             
+                <div class="col-md-6">
+                    <div class='b'>
+                        <table>
+                        <tbody>
+                            <tr>
+                                <td valign="top">
+                                    <h3>Select a campus/program, term, course ...</h3>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table summary='Select a course>
+                           <thead>
+                           <tr>       
+                           
+
+                        <th scope='col'></th>
+                         <th scope='col'>Campus/program</th>
+                        <th scope='col'>Term</th>
+                        <th scope='col'>Course</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                       <c:forEach items="${requestScope.ses.atts}" var="a" varStatus="loop">
-                 <tr>
-                    <td>${loop.index+1}</td>
-                    <td><a href="">${ses.group.name}</a></td>
-                    <td><a href="">${a.student.id}</a>
-                    <input type="hidden" name="stdid" value="${a.student.id}"/>
-                    </td>
-                    <td>${a.student.name}</td>
-                    <td><input type="radio"
-                               <c:if test="${a.present}">
-                               checked="checked"
-                               </c:if>
-                               name="present${a.student.id}" value="present" />Present</td>
-                    <td><input type="radio"
-                               <c:if test="${!a.present}">
-                               checked="checked"
-                               </c:if>
-                               name="present${a.student.id}" value="absent" />Absent</td>
-                    <td><input type="text" name="description${a.student.id}" value="${a.description}" /></td>
-                    <td>
-                        <p id="show image" onclick="show()">Show Image</p>
-                        <img src="../img/avatar.jpg" style="height:150px;width:150px;border-width:0px;"/> 
-                    </td>
-                </tr>   
-                    
-                </c:forEach>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td valign='top'>
+                                    <div id="ctl00_mainContent_divCampus">
+                                        <table>
+                                            <tr>
+                                                <td><b>FU-HL</b></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td valign='top'>
+                                    <div id="ctl00_mainContent_divTerm">
+                                        <table>
+                                            <c:forEach items="${requestScope.subjects.groups}" var="g">
+                                                <tr>
+                                                <td><b>${g.sem}${g.year}</b></td>
+                                            </tr>
+                                            </c:forEach>
+                                            
+                                        </table>
+                                    </div>
+                                </td>
+                                <td valign='top'>
+                                    <div id="ctl00_mainContent_divCourse">
+                                        <table>
+                                            <tr>
+                                                <td><b>Java Web Application Development(PRJ301)(SE1645,start 05/09/2022)</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Statistics and Probability(MAS291)</a>(SE1645,start 05/09/2022)</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Elementary Japanese 1-A1.2(JPD123)</a>(SE1645,start 06/09/2022)</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Introduction to Software Engineering(SWE201c)</a>(SE1645,start 17/09/2022)</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Internet of Things(IOT102)</a>(SE1645,start 10/10/2022)</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                        </tbody>
+                    </table>
+                        </div>
+                </div>
+            
+            
+                    <div class="col-md-6">
                         
-                    </tbody>
-                </table>
-                <input type="submit" value="Save"/>
-                </form>
+                        <div class="b2">
+                            <div id="ctl00_mainContent_divDetail"> <td valign='top'>
+         <h3>... then see report<br />
+             <br />
+         </h3>
+         <table class='table table-bordered table1'>
+             
+             <thead>
+             <tr>    
+             <th>No.</th>
+             <th>Date</th>
+             <th>Slot</th>
+             <th>Room</th>
+             <th>Lecturer</th>
+             <th>Group Name</th>
+             <th>Attedance status</th>
+             <th>Lecturer's comment</th>
+             </tr>
+             </thead>
+             <tbody>
+                 <tr>
+                     <td>1</td>
+                     <td><span class='label label-primary'>Monday 05/09/2022</span></td>
+                     <td><span class='label label-danger'>5_(14:30-16:00)</span></td>
+                     <td>DE-C203</td><td>SonNT5</td>
+                     <td>SE1645</td>
+                     <td><font color=green>Present</font></td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>2</td>
+                     <td>
+                         <span class='label label-primary'>Wednesday 07/09/2022</span>
+                     </td>
+                     <td><span class='label label-danger'>5_(14:30-16:00)</span></td>
+                     <td>DE-C203</td>
+                     <td>SonNT5</td>
+                     <td>SE1645</td>
+                     <td><font color=green>Present</font></td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>3</td>
+                     <td><span class='label label-primary'>Friday 09/09/2022</span></td>
+                     <td><span class='label label-danger'>5_(14:30-16:00)</span></td>
+                     <td>DE-C203</td>
+                     <td>SonNT5</td>
+                     <td>SE1645</td>
+                     <td><font color=green>Present</font></td>
+                     <td></td>
+                 </tr>
+
+</tbody>
+                </table>  
+    
+
+
+
+                                </div>
+                        </div>
+                    
+                        
+                    </div>
+              
             </div>
+    </form>
+   
+                
             <div>
                 <b>Mọi góp ý, thắc mắc xin liên hệ</b>:
                 <span>Phòng dịch vụ sinh viên:</span> Email:

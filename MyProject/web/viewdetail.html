@@ -15,7 +15,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <link rel="stylesheet" href="bootstrap.min.css" type="text/css"/>
     </head>
     <body>
-        <div class="container">
+         <div class="container">
             <div class="row">
                 <div class="col-md-8">
                     <h1><span>FPT University Academic Portal</span> </h1>
@@ -41,51 +41,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 </div>
             </div>
             <style>
-                
-                .a {
-                    margin-top:10px;
-                    margin-bottom: 50px;
-                    
-                }
-                .a1 {
-                    float: right; 
-                    margin-right: 20px;
-                }
-                .a1 a, .a1 span {
-                    border: none;
-                    outline: none;
-                    padding: 4px;
-                    color: white;
-                    background-color: #0fcc45;
-                    border-radius: 5px;
-                }
-              
-                .a2 {
-                    text-decoration: none;
-                }
-                
-            </style>
-
-            <div class="a">
-                <div class="a1">
-                    <a href="">
-                        <span>Username</span>
-                    </a> | 
-                    <a href="">logout</a> |
-                    <span> CAMPUS: FPTU-Hòa Lạc</span>
-                </div>
-                <div class="a2">
-                    <span>
-                        <a href='#'>Home</a>|
-                        <b>Groups</b>
-                        
-                    </span>
-                </div>
-            </div>
-            <div>
-                <h2>Select a course, then a group ...</h2>  
-            </div>
-                        <style>
                   .b table {
                         font-family: arial, sans-serif;
                         border-collapse: collapse;
@@ -93,38 +48,234 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     }
                     td {
                         text-align: left;
-                        padding: 6px;
+                        padding: 8px;
                     }
-                    .b td, th {
+                    .b th {
                         border: 1px solid #dddddd;
                         text-align: left;
                         padding: 8px;
                     }
-                    .b th {
+                    .b2 td, .b2 th {
+                        border: 1px solid #dddddd;
+                        text-align: left;
+                        padding: 8px;
+                    }
+                    .b th, .b2 th {
                         background-color: rgb(124, 156, 190);
                     } 
             </style>
             
-            <div class="b">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>CAMPUS</th>
-                            <th>TERM</th>
-                            <th>DEPARTMENT</th>
-                            <th>COURSE</th>
-                            <th>GROUP</th>  
+            <form action="activities.html" method="POST">
+            
+                <div class="row">
+             
+                <div class="col-md-6">
+                    <div class='b'>
+                        <table>
+                        <tbody>
+                            <tr>
+                                <td valign="top">
+                                    <h3>Select a campus/program, term, course ...</h3>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table summary='Select a course>
+                           <thead>
+                           <tr>       
+                           
+
+                        <th scope='col'></th>
+                         <th scope='col'>Campus/program</th>
+                        <th scope='col'>Term</th>
+                        <th scope='col'>Course</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>FU-HL</b></td>
-                            <td><a href=""/>Summer2017</td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td valign='top'>
+                                    <div id="ctl00_mainContent_divCampus">
+                                        <table>
+                                            <tr>
+                                                <td><b>FU-HL</b></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td valign='top'>
+                                    <div id="ctl00_mainContent_divTerm">
+                                        <table>
+                                            <tr>
+                                                <td><a href="">Summer2017</a></td>
+                                            </tr>
+                                            <tr><td><a href="">Fall2017</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td> <a href="">Spring2018</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Summer2018</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Fall2018</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Spring2019</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Summer2019</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Fall2019</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Spring2020</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Summer2020</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Fall2020</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Spring2021</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Summer2021</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Fall2021</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Spring2022</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Summer2022</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Fall2022</b></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td valign='top'>
+                                    <div id="ctl00_mainContent_divCourse">
+                                        <table>
+                                            <tr>
+                                                <td><b>Java Web Application Development(PRJ301)(SE1645,start 05/09/2022)</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Statistics and Probability(MAS291)</a>(SE1645,start 05/09/2022)</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Elementary Japanese 1-A1.2(JPD123)</a>(SE1645,start 06/09/2022)</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Introduction to Software Engineering(SWE201c)</a>(SE1645,start 17/09/2022)</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Internet of Things(IOT102)</a>(SE1645,start 10/10/2022)</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                        </tbody>
+                    </table>
+                        </div>
+                </div>
+            
+            
+                    <div class="col-md-6">
+                        
+                        <div class="b2">
+                            <div id="ctl00_mainContent_divDetail"> <td valign='top'>
+         <h3>... then see report<br />
+             <br />
+         </h3>
+         <table class='table table-bordered table1'>
+             
+             <thead>
+             <tr>    
+             <th>No.</th>
+             <th>Date</th>
+             <th>Slot</th>
+             <th>Room</th>
+             <th>Lecturer</th>
+             <th>Group Name</th>
+             <th>Attedance status</th>
+             <th>Lecturer's comment</th>
+             </tr>
+             </thead>
+             <tbody>
+                 <tr>
+                     <td>1</td>
+                     <td><span class='label label-primary'>Monday 05/09/2022</span></td>
+                     <td><span class='label label-danger'>5_(14:30-16:00)</span></td>
+                     <td>DE-C203</td><td>SonNT5</td>
+                     <td>SE1645</td>
+                     <td><font color=green>Present</font></td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>2</td>
+                     <td>
+                         <span class='label label-primary'>Wednesday 07/09/2022</span>
+                     </td>
+                     <td><span class='label label-danger'>5_(14:30-16:00)</span></td>
+                     <td>DE-C203</td>
+                     <td>SonNT5</td>
+                     <td>SE1645</td>
+                     <td><font color=green>Present</font></td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>3</td>
+                     <td><span class='label label-primary'>Friday 09/09/2022</span></td>
+                     <td><span class='label label-danger'>5_(14:30-16:00)</span></td>
+                     <td>DE-C203</td>
+                     <td>SonNT5</td>
+                     <td>SE1645</td>
+                     <td><font color=green>Present</font></td>
+                     <td></td>
+                 </tr>
+
+</tbody>
+                </table>  
+    
+
+
+
+                                </div>
+                        </div>
+                    
+                        
+                    </div>
+
+ 
+                          
+                                
+
+                
+                
             </div>
+                
+                
+                
+                
+                
+                
+                
+            <div>
+                <b>Mọi góp ý, thắc mắc xin liên hệ</b>:
+                <span>Phòng dịch vụ sinh viên:</span> Email:
+                <a href="">dichvusinhvien@fe.edu.vn</a>.
+                <span> Điện thoại</span>: 09290133454
+                
+            </div>
+                
+            
+            
         </div>
+        
     </body>
 </html>
