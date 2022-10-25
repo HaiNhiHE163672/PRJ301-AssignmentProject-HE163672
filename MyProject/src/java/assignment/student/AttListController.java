@@ -4,9 +4,10 @@
  */
 package assignment.student;
 
+import dal.GroupDBContext;
+import dal.SessionDBContext;
 import dal.StudentDBContext;
 import dal.SubjectDBContext;
-import dal.TimeSlotDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,10 +15,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import model.assignment.Group;
 import model.assignment.Session;
 import model.assignment.Student;
-import model.assignment.Subject;
-import model.assignment.TimeSlot;
+
 
 
 /**
@@ -39,25 +40,15 @@ public class AttListController extends HttpServlet {
             throws ServletException, IOException {
         
         int stdid = Integer.parseInt(request.getParameter("stdid"));
-        int subid = Integer.parseInt(request.getParameter("subid"));
         
-
         StudentDBContext stuDB = new StudentDBContext();
         Student student = stuDB.get(stdid);
         request.setAttribute("student", student);
         
-        TimeSlotDBContext slotDB = new TimeSlotDBContext();
-        ArrayList<TimeSlot> slots = slotDB.list();
-        request.setAttribute("slots", slots);
-        
-        SubjectDBContext subDB = new SubjectDBContext();
-        ArrayList<Subject> subjects = subDB.filter(stdid, subid);
-        request.setAttribute("subjects", subjects);
-        
-        
-
-        
-        
+        GroupDBContext gDB = new GroupDBContext();
+        ArrayList<Group> groups = gDB.list();
+        request.setAttribute("groups", groups);
+               
         request.getRequestDispatcher("../view/student/attlist.jsp").forward(request, response);
     }
 

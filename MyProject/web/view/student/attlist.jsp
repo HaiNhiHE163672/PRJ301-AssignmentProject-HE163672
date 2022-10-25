@@ -169,33 +169,33 @@
                                 </td>
                                 <td valign='top'>
                                     <div id="ctl00_mainContent_divTerm">
-                                        <table>
-                                            <c:forEach items="${requestScope.subjects.groups}" var="g">
-                                            <tr>
-                                              
-                                            </tr>
-                                            </c:forEach>
-                                           <tr>
-                                               <td><a href=""></a></td>
-                                            </tr>
-                                            <tr><td><a href="">Fall2017</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td> <a href="">Spring2018</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="">Summer2018</a></td>
-                                            </tr>
+                                        
+                                        <table>  
                                             
+                                            <c:forEach items="${requestScope.groups}" var="g">
+
+                                            <tr>
+                                                    <td><a href="">${g.sem}${g.year}</a></td>
+                                            </tr>
+                                           
+                                            </c:forEach>   
+
                                         </table>
                                     </div>
                                 </td>
                                 <td valign='top'>
                                     <div id="ctl00_mainContent_divCourse">
+                                       
                                         <table>
-                                            <tr>
-                                                <td><b>Java Web Application Development(PRJ301)(SE1645,start 05/09/2022)</b></td>
-                                            </tr>
+                                            <c:forEach items="${requestScope.group.sub}" var="s">
+                                                 
+                                                 <tr>
+                                                     
+                                                     <td><b>-</b></td>
+                                                 </tr>
+                                              
+                                             </c:forEach>
+                                            
                                             <tr>
                                                 <td><a href="">Statistics and Probability(MAS291)</a>(SE1645,start 05/09/2022)</td>
                                             </tr>
@@ -209,6 +209,7 @@
                                                 <td><a href="">Internet of Things(IOT102)</a>(SE1645,start 10/10/2022)</td>
                                             </tr>
                                         </table>
+                                        
                                     </div>
                                 </td>
                         </tbody>
