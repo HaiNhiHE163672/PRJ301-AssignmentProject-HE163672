@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
-import model.assignment.Attandance;
 import model.assignment.Session;
 import model.assignment.Student;
 import model.assignment.TimeSlot;
@@ -38,7 +37,7 @@ public class TimeTableController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       int stdid = Integer.parseInt(request.getParameter("stdid"));
+        int stdid = Integer.parseInt(request.getParameter("stdid"));
         String raw_from = request.getParameter("from");
         String raw_to = request.getParameter("to");
         java.sql.Date from = null;

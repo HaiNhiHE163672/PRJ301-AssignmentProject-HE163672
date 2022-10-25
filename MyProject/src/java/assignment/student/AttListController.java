@@ -4,7 +4,6 @@
  */
 package assignment.student;
 
-import dal.SessionDBContext;
 import dal.StudentDBContext;
 import dal.SubjectDBContext;
 import dal.TimeSlotDBContext;
@@ -15,12 +14,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import model.assignment.Attandance;
-import model.assignment.Group;
 import model.assignment.Session;
 import model.assignment.Student;
 import model.assignment.Subject;
 import model.assignment.TimeSlot;
+
 
 /**
  *
@@ -39,26 +37,25 @@ public class AttListController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        
         int stdid = Integer.parseInt(request.getParameter("stdid"));
+        int subid = Integer.parseInt(request.getParameter("subid"));
+        
+
+        StudentDBContext stuDB = new StudentDBContext();
+        Student student = stuDB.get(stdid);
+        request.setAttribute("student", student);
         
         TimeSlotDBContext slotDB = new TimeSlotDBContext();
         ArrayList<TimeSlot> slots = slotDB.list();
         request.setAttribute("slots", slots);
         
-        int sesid = Integer.parseInt(request.getParameter("id"));
-        SessionDBContext sesDB = new SessionDBContext();
-        Session ses = sesDB.get(sesid);
-        request.setAttribute("ses", ses);
-        
-        StudentDBContext stuDB = new StudentDBContext();
-        Student student = stuDB.get(stdid);
-        request.setAttribute("student", student);
-        
-        int subid = Integer.parseInt(request.getParameter("subid"));
         SubjectDBContext subDB = new SubjectDBContext();
-        ArrayList<Subject> subjects = subDB.filter(stdid,subid);
+        ArrayList<Subject> subjects = subDB.filter(stdid, subid);
         request.setAttribute("subjects", subjects);
+        
+        
+
         
         
         request.getRequestDispatcher("../view/student/attlist.jsp").forward(request, response);
@@ -91,24 +88,7 @@ public class AttListController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        Session ses = new Session();
-        Subject sub = new Subject();
- 
-        sub.setId(Integer.parseInt(request.getParameter("subid")));
-        String[] stdids = request.getParameterValues("stdid");
-        for (String stdid : stdids) {
-            Attandance a = new Attandance();
-            Student s = new Student();
-            Group g = new Group();
-            
-            a.setStudent(s);
-            a.setDescription(request.getParameter("description" + stdid));
-            a.setPresent(request.getParameter("present" + stdid).equals("present"));
-            s.setId(Integer.parseInt(stdid));
-            g.setSubject(sub);
-            ses.getAtts().add(a);
-            SubjectDBContext db = new SubjectDBContext();
-        }
+        
     }
 
     /**

@@ -64,6 +64,48 @@
                 </table>
                 </div>
             </div>
+             <style>
+                 .a {
+                     margin-top:10px;
+                     margin-bottom: 50px;
+                     background-color: rgb(193, 191, 191);
+                     padding: 10px;
+
+                 }
+                 .a1 {
+                     float: right;
+                     margin-right: 20px;
+                 }
+                 .a1 a, .a1 span {
+                     border: none;
+                     outline: none;
+                     padding: 4px;
+                     color: white;
+                     background-color: #0fcc45;
+                     border-radius: 5px;
+                 }
+
+                 .a2 {
+                     text-decoration: none;
+                 }
+
+             </style>
+
+            <div class="a">
+                <div class="a1">
+                    <a href="">
+                        <span>${requestScope.student.name}</span>
+                    </a> | 
+                    <a href="">logout</a> |
+                    <span> CAMPUS: FPTU-Hòa Lạc</span>
+                </div>
+                <div class="a2">
+                    <span>
+                        <a href='#'>Home</a>|
+                        <b>View Schedule</b>
+                    </span>
+                </div>
+            </div>
             <style>
                   .b table {
                         font-family: arial, sans-serif;
@@ -88,13 +130,12 @@
                         background-color: rgb(124, 156, 190);
                     } 
             </style>
-            
-            <form action="attlist" method="POST">
-                <input type="hidden" name="stdid" value="${param.stdid}"/>
+
                 <div class="row">
              
                 <div class="col-md-6">
                     <div class='b'>
+                        
                         <table>
                         <tbody>
                             <tr>
@@ -130,10 +171,21 @@
                                     <div id="ctl00_mainContent_divTerm">
                                         <table>
                                             <c:forEach items="${requestScope.subjects.groups}" var="g">
-                                                <tr>
-                                                <td><b>${g.sem}${g.year}</b></td>
+                                            <tr>
+                                              
                                             </tr>
                                             </c:forEach>
+                                           <tr>
+                                               <td><a href=""></a></td>
+                                            </tr>
+                                            <tr><td><a href="">Fall2017</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td> <a href="">Spring2018</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Summer2018</a></td>
+                                            </tr>
                                             
                                         </table>
                                     </div>
