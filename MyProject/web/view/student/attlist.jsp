@@ -169,46 +169,26 @@
                                 </td>
                                 <td valign='top'>
                                     <div id="ctl00_mainContent_divTerm">
-                                        
-                                        <table>  
-                                            
-                                            <c:forEach items="${requestScope.groups}" var="g">
+                                         <table>
+                                            <tr>
+                                                <td><a href="?stdid=${student.id}&gid=${ses.group.id}&id=${ses.group.subject.id}">${ses.group.sem}${ses.group.year}</a></td>
+                                            </tr>
+                                                   </table>
+                                                            <td valign='top'>
+                                                                <div id="ctl00_mainContent_divCourse">
+                                                                    <table>
+                                                                        
+                                                                            <c:forEach items="${requestScope.sessions}" var="ses">
+                                                                                <tr>
+                                                                                    <td><a href="">${ses.group.subject.name}</a></td>
+                                                                                </tr> 
+                                                                               
+                                                                            </c:forEach>
+                                                                           
+                                                                        
+                                                                        
 
-                                            <tr>
-                                                    <td><a href="">${g.sem}${g.year}</a></td>
-                                            </tr>
-                                           
-                                            </c:forEach>   
-
-                                        </table>
-                                    </div>
-                                </td>
-                                <td valign='top'>
-                                    <div id="ctl00_mainContent_divCourse">
-                                       
-                                        <table>
-                                            <c:forEach items="${requestScope.group.sub}" var="s">
-                                                 
-                                                 <tr>
-                                                     
-                                                     <td><b>-</b></td>
-                                                 </tr>
-                                              
-                                             </c:forEach>
-                                            
-                                            <tr>
-                                                <td><a href="">Statistics and Probability(MAS291)</a>(SE1645,start 05/09/2022)</td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="">Elementary Japanese 1-A1.2(JPD123)</a>(SE1645,start 06/09/2022)</td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="">Introduction to Software Engineering(SWE201c)</a>(SE1645,start 17/09/2022)</td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="">Internet of Things(IOT102)</a>(SE1645,start 10/10/2022)</td>
-                                            </tr>
-                                        </table>
+                                                            </table>
                                         
                                     </div>
                                 </td>
@@ -240,15 +220,20 @@
              </tr>
              </thead>
              <tbody>
-                 <tr>
-                     <td>1</td>
-                     <td><span class='label label-primary'>Monday 05/09/2022</span></td>
-                     <td><span class='label label-danger'>5_(14:30-16:00)</span></td>
-                     <td>DE-C203</td><td>SonNT5</td>
-                     <td>SE1645</td>
+                 <c:forEach items="${requestScope.sessions}" var="ses" varStatus="loop">
+                 
+                     <tr>
+                     <td>${loop.index+1}</td>
+                     <td><span class='label label-primary'>${helper.getDayNameofWeek(ses.date)} ${ses.date}</span></td>
+                     <td><span class='label label-danger'>${ses.slot.id}_(${ses.slot.description})</span></td>
+                     <td>${ses.room.name}</td>
+                     <td>${ses.lecturer.name}</td>
+                     <td>${ses.group.name}</td>
                      <td><font color=green>Present</font></td>
                      <td></td>
                  </tr>
+                 
+                 </c:forEach>
                  <tr>
                      <td>2</td>
                      <td>

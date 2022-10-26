@@ -163,17 +163,17 @@
                     <td><a href="">${a.student.id}</a>
                     <input type="hidden" name="stdid" value="${a.student.id}"/>
                     </td>
-                    <td>${a.student.name}</td>
-                    <td><input type="radio"
-                               <c:if test="${a.present}">
-                               checked="checked"
-                               </c:if>
-                               name="present${a.student.id}" value="present" />Present</td>
+                    <td>${a.student.name}</td>                   
                     <td><input type="radio"
                                <c:if test="${!a.present}">
                                checked="checked"
                                </c:if>
                                name="present${a.student.id}" value="absent" />Absent</td>
+                    <td><input type="radio"
+                               <c:if test="${a.present}">
+                               checked="checked"
+                               </c:if>
+                               name="present${a.student.id}" value="present" />Present</td>
                     <td><input type="text" name="description${a.student.id}" value="${a.description}" /></td>
                     <td>
                         <p id="show image" onclick="show()">Show Image</p>

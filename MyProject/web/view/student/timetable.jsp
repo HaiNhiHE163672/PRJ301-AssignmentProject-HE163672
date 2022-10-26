@@ -215,6 +215,7 @@
                         <td>Slot ${slot.id}</td>  
                         <c:forEach items="${requestScope.dates}" var="d">
                         <td>
+                            
                             <c:forEach items="${requestScope.sessions}" var="ses">
                                 <c:if test="${helper.compare(ses.date,d) eq 0 and (ses.slot.id eq slot.id)}">
                                     <a href="att?id=${ses.id}">${ses.group.subject.name}</a>

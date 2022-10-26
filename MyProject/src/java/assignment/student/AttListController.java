@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import model.assignment.Group;
 import model.assignment.Session;
 import model.assignment.Student;
+import model.assignment.Subject;
 
 
 
@@ -40,14 +41,28 @@ public class AttListController extends HttpServlet {
             throws ServletException, IOException {
         
         int stdid = Integer.parseInt(request.getParameter("stdid"));
-        
+        int gid = Integer.parseInt(request.getParameter("gid"));
+        int sesid = Integer.parseInt(request.getParameter("id"));
+//        int subid = Integer.parseInt(request.getParameter("subid"));
+                
         StudentDBContext stuDB = new StudentDBContext();
         Student student = stuDB.get(stdid);
         request.setAttribute("student", student);
         
-        GroupDBContext gDB = new GroupDBContext();
-        ArrayList<Group> groups = gDB.list();
+        GroupDBContext groupDB = new GroupDBContext();
+        ArrayList<Group> groups = groupDB.list();
         request.setAttribute("groups", groups);
+        
+//        SubjectDBContext subDB = new SubjectDBContext();
+//        ArrayList<Subject> subjects = subDB.list();
+//        request.setAttribute("subjects", subjects);
+        
+        
+        SessionDBContext sesDB = new SessionDBContext();
+        ArrayList<Session> sessions = sesDB.showlist(stdid, gid);
+        Session ses = sesDB.get(sesid);
+        request.setAttribute("ses", ses);
+        request.setAttribute("sessions", sessions);
                
         request.getRequestDispatcher("../view/student/attlist.jsp").forward(request, response);
     }
