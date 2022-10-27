@@ -171,7 +171,7 @@
                                     <div id="ctl00_mainContent_divTerm">
                                          <table>
                                             <tr>
-                                                <td><a href="?stdid=${student.id}&gid=${ses.group.id}&id=${ses.group.subject.id}">${ses.group.sem}${ses.group.year}</a></td>
+                                                <td><a href="">${stu.groups.sem}${stu.groups.year}</a></td>
                                             </tr>
                                                    </table>
                                                             <td valign='top'>
@@ -205,6 +205,9 @@
          <h3>... then see report<br />
              <br />
          </h3>
+                                  
+                                        
+                                    
          <table class='table table-bordered table1'>
              
              <thead>
@@ -220,45 +223,40 @@
              </tr>
              </thead>
              <tbody>
-                 <c:forEach items="${requestScope.sessions}" var="ses" varStatus="loop">
+                 <c:forEach items="${requestScope.sessions}" var="ses">
                  
                      <tr>
-                     <td>${loop.index+1}</td>
+                     <td>${ses.index}</td>
                      <td><span class='label label-primary'>${helper.getDayNameofWeek(ses.date)} ${ses.date}</span></td>
                      <td><span class='label label-danger'>${ses.slot.id}_(${ses.slot.description})</span></td>
                      <td>${ses.room.name}</td>
                      <td>${ses.lecturer.name}</td>
                      <td>${ses.group.name}</td>
-                     <td><font color=green>Present</font></td>
-                     <td></td>
+                     <c:forEach items="${requestScope.student.atts}" var="a" >
+                             <c:if test="${ses.attanded}">
+                                 <c:if test="${!a.present}">
+                                    <td> <font color=red>Absent</font> </td> 
+                               </c:if>                
+                               <c:if test="${a.present}">
+                                   <td><font color=green>Present</font></td> 
+                                   
+                               </c:if>
+                                   </c:if> 
+                                   
+                             <c:if test="${!ses.attanded}">
+                                
+                                 <td><font>Future</font></td> 
+  
+                         </c:if>
+                         <td>${a.session.index}</td>
+                                     
+                     </c:forEach>
                  </tr>
                  
                  </c:forEach>
-                 <tr>
-                     <td>2</td>
-                     <td>
-                         <span class='label label-primary'>Wednesday 07/09/2022</span>
-                     </td>
-                     <td><span class='label label-danger'>5_(14:30-16:00)</span></td>
-                     <td>DE-C203</td>
-                     <td>SonNT5</td>
-                     <td>SE1645</td>
-                     <td><font color=green>Present</font></td>
-                     <td></td>
-                 </tr>
-                 <tr>
-                     <td>3</td>
-                     <td><span class='label label-primary'>Friday 09/09/2022</span></td>
-                     <td><span class='label label-danger'>5_(14:30-16:00)</span></td>
-                     <td>DE-C203</td>
-                     <td>SonNT5</td>
-                     <td>SE1645</td>
-                     <td><font color=green>Present</font></td>
-                     <td></td>
-                 </tr>
-
 </tbody>
                 </table>  
+                                  
     
 
 
