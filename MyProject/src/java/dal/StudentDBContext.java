@@ -36,8 +36,11 @@ public class StudentDBContext extends DBContext<Student>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    public Student getByGid(int stdid,int gid) {
-        try {
+
+    @Override
+    public Student get(int stdid) {
+       
+         try {
         String sql = "select s.stdid, s.stdname\n"
                 + "      ,ses.sesid,ses.[date],ses.[index],ses.[date] ,ses.attanded\n"
                 + "      ,ISNULL(a.present,0) present, ISNULL(a.[description],'') [description]\n"
@@ -47,17 +50,20 @@ public class StudentDBContext extends DBContext<Student>{
                 + "			 inner join [Group] g on g.gid = sg.gid\n"
                 + "			 left join [Session]  ses on ses.gid = g.gid\n"
                 + "			 LEFT JOIN Attandance a ON s.stdid = a.stdid AND ses.sesid = a.sesid\n"
-                + "	     where s.stdid = ?\n"
-                + "		    and g.gid = ?";
+                + "	     where s.stdid = ?";
         PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, stdid);
-            stm.setInt(2, gid);
+            
             ResultSet rs = stm.executeQuery();
-        if(rs.next()){
+            
+        while (rs.next()){
+            
+                
             Student std = new Student();
             std.setId(rs.getInt("stdid"));
             std.setName(rs.getString("stdname"));
             
+
             Group g = new Group();
             g.setId(rs.getInt("gid"));
             g.setName(rs.getString("gname"));
@@ -68,15 +74,15 @@ public class StudentDBContext extends DBContext<Student>{
             ses.setDate(rs.getDate("date"));
             ses.setIndex(rs.getInt("index"));
             ses.setAttanded(rs.getBoolean("attanded"));
-            g.getSessions().add(ses);
-            
-             Attandance a = new Attandance();
-                a.setStudent(std);
+
+                Attandance a = new Attandance();
                 a.setSession(ses);
+                a.setStudent(std);
                 a.setPresent(rs.getBoolean("present"));
                 a.setDescription(rs.getString("description"));
                 std.getAtts().add(a);
                 
+               
                 return std;
             
         }
@@ -84,29 +90,6 @@ public class StudentDBContext extends DBContext<Student>{
             Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
  
-        return null;
-        
-    }
-
-    @Override
-    public Student get(int id) {
-       
-        try {
-            String sql = "SELECT stdid,stdname FROM Student WHERE stdid = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, id);
-            ResultSet rs = stm.executeQuery();
-            if(rs.next()){
-                Student std = new Student();
-                std.setId(rs.getInt("stdid"));
-                std.setName(rs.getString("stdname"));
-                return std;
-             
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return null;
         
     }

@@ -4,30 +4,20 @@
  */
 package assignment.student;
 
-import dal.AttandanceDBContext;
-import dal.GroupDBContext;
-import dal.SessionDBContext;
-import dal.StudentDBContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import model.assignment.Attandance;
-import model.assignment.Group;
-import model.assignment.Session;
-import model.assignment.Student;
-
-
-
 
 /**
  *
  * @author User
  */
-public class AttListController extends HttpServlet {
+@WebServlet(name = "AccountController", urlPatterns = {"/AccountController"})
+public class AccountController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,25 +30,19 @@ public class AttListController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        int stdid = Integer.parseInt(request.getParameter("stdid"));
-        int gid = Integer.parseInt(request.getParameter("gid"));
-        int subid = Integer.parseInt(request.getParameter("subid"));
-                
-        StudentDBContext stuDB = new StudentDBContext();
-        Student student = stuDB.get(stdid);
-        request.setAttribute("student", student);
-    
-        GroupDBContext groupDB = new GroupDBContext();
-        ArrayList<Group> groups = groupDB.list();
-        request.setAttribute("groups", groups);
-
-
-        SessionDBContext sesDB = new SessionDBContext();
-        ArrayList<Session> sessions = sesDB.showlist(stdid, gid,subid);        
-        request.setAttribute("sessions", sessions);
-              
-        request.getRequestDispatcher("../view/student/attlist.jsp").forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AccountController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AccountController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -88,9 +72,6 @@ public class AttListController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-            
-            
-            
     }
 
     /**

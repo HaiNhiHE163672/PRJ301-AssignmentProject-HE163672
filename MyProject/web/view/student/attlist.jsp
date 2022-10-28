@@ -219,7 +219,8 @@
              <th>Lecturer</th>
              <th>Group Name</th>
              <th>Attedance status</th>
-             <th>Lecturer's comment</th>
+             <th>Lecturer's comment</th>             
+             
              </tr>
              </thead>
              <tbody>
@@ -232,7 +233,9 @@
                      <td>${ses.room.name}</td>
                      <td>${ses.lecturer.name}</td>
                      <td>${ses.group.name}</td>
-                     <c:forEach items="${requestScope.student.atts}" var="a" >
+                     
+                     <c:forEach items="${requestScope.student.atts}" var="a" >                        
+                         
                              <c:if test="${ses.attanded}">
                                  <c:if test="${!a.present}">
                                     <td> <font color=red>Absent</font> </td> 
@@ -241,19 +244,25 @@
                                    <td><font color=green>Present</font></td> 
                                    
                                </c:if>
-                                   </c:if> 
                                    
+                                </c:if> 
+      
                              <c:if test="${!ses.attanded}">
                                 
-                                 <td><font>Future</font></td> 
+                                 <td><p><font>Future</font></p></td> 
   
                          </c:if>
-                         <td>${a.session.index}</td>
-                                     
-                     </c:forEach>
-                 </tr>
-                 
+                              <td>${a.description}</td>   
+                         
+                         
+                              
+                      </c:forEach>               
+                    
+
                  </c:forEach>
+                 
+                 
+                 </tr>
 </tbody>
                 </table>  
                                   

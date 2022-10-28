@@ -35,7 +35,6 @@ public class GroupDBContext extends DBContext<Group>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-
     @Override
     public Group get(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -43,7 +42,7 @@ public class GroupDBContext extends DBContext<Group>{
 
     @Override
     public ArrayList<Group> list() {
-         ArrayList<Group> groups = new ArrayList<>();
+        ArrayList<Group> groups = new ArrayList<>();
          String sql = "select gid, gname, subid, lid, sem, [year] from [Group]";
             
         try {
