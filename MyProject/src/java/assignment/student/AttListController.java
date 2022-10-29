@@ -8,6 +8,7 @@ import dal.AttandanceDBContext;
 import dal.GroupDBContext;
 import dal.SessionDBContext;
 import dal.StudentDBContext;
+import dal.SubjectDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,13 +51,19 @@ public class AttListController extends HttpServlet {
         request.setAttribute("student", student);
     
         GroupDBContext groupDB = new GroupDBContext();
-        ArrayList<Group> groups = groupDB.list();
+        ArrayList<Group> groups = groupDB.list(gid);
         request.setAttribute("groups", groups);
 
 
-        SessionDBContext sesDB = new SessionDBContext();
-        ArrayList<Session> sessions = sesDB.showlist(stdid, gid,subid);        
+        SessionDBContext sesDB = new SessionDBContext();       
+        ArrayList<Session> sessions = sesDB.showlist(stdid, gid,subid); 
         request.setAttribute("sessions", sessions);
+        
+        
+        
+        AttandanceDBContext atDB = new AttandanceDBContext();
+        ArrayList<Attandance> atts = atDB.list(stdid);
+        request.setAttribute("atts", atts);
               
         request.getRequestDispatcher("../view/student/attlist.jsp").forward(request, response);
     }
@@ -87,7 +94,6 @@ public class AttListController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
             
             
             

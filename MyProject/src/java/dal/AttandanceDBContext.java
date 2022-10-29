@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import model.assignment.Attandance;
 import model.assignment.Session;
 import model.assignment.Student;
-import model.assignment.TimeSlot;
 
 /**
  *
@@ -42,30 +41,36 @@ public class AttandanceDBContext extends DBContext<Attandance>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public ArrayList<Attandance> list() {
+    
+    public ArrayList<Attandance> list(int stdid) {
         ArrayList<Attandance> atts = new ArrayList<>();
         
         try {
-            String sql = "select sesid, stdid, present, description, record_time from Attandance";
+            String sql = "select present, [description], record_time\n"
+                    + "   ,ses.sesid,ses.[index]\n"
+                    + "	  ,s.stdid, s.stdname\n"
+                    + "  from Attandance a\n"
+                    + "  inner join [Session] ses on ses.sesid = a.sesid\n"
+                    + "  inner join Student s on s.stdid = a.stdid\n"
+                    + "  where a.stdid = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, stdid);
             ResultSet rs = stm.executeQuery();
             while(rs.next())
             {
                 Attandance att = new Attandance();
                 Session ses = new Session();
                 ses.setId(rs.getInt("sesid"));
+                ses.setIndex(rs.getInt("index"));
                 att.setSession(ses);
                 
                 Student s = new Student();
                 s.setId(rs.getInt("stdid"));
+                s.setName(rs.getString("stdname"));
                 att.setStudent(s);
                 
                 att.setDescription(rs.getString("description"));
                 att.setPresent(rs.getBoolean("present"));
-                Timestamp timestamp = rs.getTimestamp("record_time");
-                java.util.Date record_time = new java.util.Date(timestamp.getTime());
-                att.setRecord_time(record_time);
                 atts.add(att);
             }
             
@@ -74,6 +79,11 @@ public class AttandanceDBContext extends DBContext<Attandance>{
         }
         return atts;
 
+    }
+
+    @Override
+    public ArrayList<Attandance> list() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

@@ -191,8 +191,8 @@
                                 <option selected="checked" value="${year}">${year}</option>
                                 <option value="${year}">${year + 1}</option>
                             </select><br/>
-                            From: <input type="date" name="from" value="${requestScope.from}"/>
-                            To: <input type="date" name="to" value="${requestScope.to}"/>
+                             From: <input type="date" name="from" value="${requestScope.from}"/>
+                             To: <input type="date" name="to" value="${requestScope.to}"/>
                             <input type="submit" value="View"/> 
                         </form>
                     </th>

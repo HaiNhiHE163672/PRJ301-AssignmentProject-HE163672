@@ -97,7 +97,7 @@ public class SessionDBContext extends DBContext<Session>{
         
     }
     
-    public ArrayList<Session> showlist (int stdid, int gid, int subid) {
+   public ArrayList<Session> showlist (int stdid, int gid, int subid) {
          ArrayList <Session> sessions = new ArrayList<>();
           try {
          String sql = "SELECT ses.sesid,ses.[index],ses.date,ses.attanded\n"
@@ -184,6 +184,7 @@ public class SessionDBContext extends DBContext<Session>{
         return sessions;
         
     }
+    
 
     @Override
     public void insert(Session model) {

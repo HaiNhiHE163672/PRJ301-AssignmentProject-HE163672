@@ -40,26 +40,35 @@ public class GroupDBContext extends DBContext<Group>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public ArrayList<Group> list() {
+    public ArrayList<Group> list(int gid) {
         ArrayList<Group> groups = new ArrayList<>();
-         String sql = "select gid, gname, subid, lid, sem, [year] from [Group]";
+        String sql = " select g.gid, g.gname,g.sem, g.year\n"
+                + "       ,s.subid, s.subname\n"
+                + "        from [Group] g\n"
+                + "		inner join [Subject] s on s.subid = g.subid\n"
+                + "		where g.gid = ?";
             
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, gid);
             ResultSet rs = stm.executeQuery();
             while(rs.next()){
-                Group g = new Group();
-                Subject sub = new Subject();
-                Lecturer l = new Lecturer();
-                         
+                Group g = new Group(); 
+                
+                Subject s = new Subject();
+                s.setId(rs.getInt("subid"));
+                s.setName(rs.getString("subname"));
+                g.setSubject(s);
+     
+                
+                
+                        
                 g.setId(rs.getInt("gid"));
                 g.setName(rs.getString("gname"));
-                g.setSubject(sub);
-                g.setLecturer(l);
                 g.setSem(rs.getString("sem"));
                 g.setYear(rs.getInt("year"));
                 groups.add(g);
+                
                         
             }
             
@@ -69,6 +78,11 @@ public class GroupDBContext extends DBContext<Group>{
         }
             
         return groups;
+    }
+
+    @Override
+    public ArrayList<Group> list() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

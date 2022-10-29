@@ -169,32 +169,40 @@
                                 </td>
                                 <td valign='top'>
                                     <div id="ctl00_mainContent_divTerm">
-                                         <table>
-                                            <tr>
-                                                <td><a href="">${stu.groups.sem}${stu.groups.year}</a></td>
-                                            </tr>
-                                                   </table>
-                                                            <td valign='top'>
-                                                                <div id="ctl00_mainContent_divCourse">
-                                                                    <table>
-                                                                        
-                                                                            <c:forEach items="${requestScope.sessions}" var="ses">
-                                                                                <tr>
-                                                                                    <td><a href="">${ses.group.subject.name}</a></td>
-                                                                                </tr> 
-                                                                               
-                                                                            </c:forEach>
-                                                                           
-                                                                        
-                                                                        
+                                        
+                                            <table>
+                                                <c:forEach items="${requestScope.groups}" var="g">
 
-                                                            </table>
+
+                                                    <tr>
+
+                                                        <td><a href="">${g.sem}${g.year}</a></td>
+
+                                                    </tr>
+                                                
+
+                                            </table>
+                                            <td valign='top'>
+                                                <div id="ctl00_mainContent_divCourse">
+                                                    <table>
+
+                                                        
+                                                            <tr>
+                                                                <td><a href="">${g.subject.name}</a></td>
+                                                            </tr> 
+
+
+                                                    </table>
+                                                            </c:forEach>
+                                                                
                                         
                                     </div>
                                 </td>
                         </tbody>
                     </table>
+                                         
                         </div>
+                                            
                 </div>
             
             
@@ -206,8 +214,10 @@
              <br />
          </h3>
                                   
+                                    <form action="attlist" method="POST">
                                         
-                                    
+                                                                    
+                                   
          <table class='table table-bordered table1'>
              
              <thead>
@@ -224,8 +234,9 @@
              </tr>
              </thead>
              <tbody>
-                 <c:forEach items="${requestScope.sessions}" var="ses">
                  
+                    <c:forEach items="${requestScope.sessions}" var="ses">
+                
                      <tr>
                      <td>${ses.index}</td>
                      <td><span class='label label-primary'>${helper.getDayNameofWeek(ses.date)} ${ses.date}</span></td>
@@ -233,33 +244,37 @@
                      <td>${ses.room.name}</td>
                      <td>${ses.lecturer.name}</td>
                      <td>${ses.group.name}</td>
-                     
-                     <c:forEach items="${requestScope.student.atts}" var="a" >                        
-                         
+                                                                  
+                                            
+                                
                              <c:if test="${ses.attanded}">
+                                 <c:forEach items="${requestScope.atts}" var="a" >  
+                                     <c:if test="${ses.index eq a.session.index}">
                                  <c:if test="${!a.present}">
-                                    <td> <font color=red>Absent</font> </td> 
+                                    <td><font color=red>Absent</font> </td> 
                                </c:if>                
                                <c:if test="${a.present}">
                                    <td><font color=green>Present</font></td> 
                                    
                                </c:if>
-                                   
-                                </c:if> 
-      
+                                   <td>${a.description}</td> 
+                               </c:if>
+                              
+                              </c:forEach> 
+                              </c:if>
+                                    
                              <c:if test="${!ses.attanded}">
                                 
                                  <td><p><font>Future</font></p></td> 
+                                 <td></td>
   
                          </c:if>
-                              <td>${a.description}</td>   
+                                
                          
-                         
-                              
-                      </c:forEach>               
+                                  
                     
 
-                 </c:forEach>
+                 </c:forEach>          
                  
                  
                  </tr>
