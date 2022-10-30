@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.assignment.Group;
-import model.assignment.Lecturer;
 import model.assignment.Subject;
 
 /**

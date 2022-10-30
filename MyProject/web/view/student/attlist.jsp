@@ -135,7 +135,7 @@
              
                 <div class="col-md-6">
                     <div class='b'>
-                        
+    
                         <table>
                         <tbody>
                             <tr>
@@ -193,12 +193,13 @@
 
 
                                                     </table>
-                                                            </c:forEach>
+                                                            
                                                                 
                                         
                                     </div>
                                 </td>
                         </tbody>
+                                    </c:forEach>        
                     </table>
                                          
                         </div>
@@ -214,9 +215,11 @@
              <br />
          </h3>
                                   
-                                    <form action="attlist" method="POST">
-                                        
-                                                                    
+                <form action="attlist" method="GET">
+                    <input type="hidden" name="stdid" value="${param.stdid}"/>
+                    <input type="hidden" name="gid" value="${requestScope.gid}"/>
+                    <input type="hidden" name="subid" value="${requestScope.subid}"/>
+                                                                             
                                    
          <table class='table table-bordered table1'>
              
@@ -274,16 +277,16 @@
                                   
                     
 
-                 </c:forEach>          
+                 </c:forEach>
+                                 
                  
                  
                  </tr>
 </tbody>
                 </table>  
-                                  
-    
-
-
+                                        
+                </form>                    
+                                 
 
                                 </div>
                         </div>
@@ -292,7 +295,7 @@
                     </div>
               
             </div>
-    </form>
+    
    
                 
             <div>
