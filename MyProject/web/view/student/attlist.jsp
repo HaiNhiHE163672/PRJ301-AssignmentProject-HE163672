@@ -130,12 +130,15 @@
                         background-color: rgb(124, 156, 190);
                     } 
             </style>
-
+            
                 <div class="row">
-             
+                    
+                        
+                    
                 <div class="col-md-6">
+                    <form action="attlist" method="GET">
                     <div class='b'>
-    
+                        
                         <table>
                         <tbody>
                             <tr>
@@ -203,7 +206,7 @@
                     </table>
                                          
                         </div>
-                                            
+                        </form>                    
                 </div>
             
             
@@ -215,10 +218,7 @@
              <br />
          </h3>
                                   
-                <form action="attlist" method="GET">
-                    <input type="hidden" name="stdid" value="${param.stdid}"/>
-                    <input type="hidden" name="gid" value="${requestScope.gid}"/>
-                    <input type="hidden" name="subid" value="${requestScope.subid}"/>
+                
                                                                              
                                    
          <table class='table table-bordered table1'>
@@ -285,7 +285,7 @@
 </tbody>
                 </table>  
                                         
-                </form>                    
+                                  
                                  
 
                                 </div>
