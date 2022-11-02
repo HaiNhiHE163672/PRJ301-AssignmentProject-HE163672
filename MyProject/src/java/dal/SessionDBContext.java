@@ -97,34 +97,33 @@ public class SessionDBContext extends DBContext<Session>{
         
     }
     
-   public ArrayList<Session> showlist (int stdid, int gid, int subid) {
+   public ArrayList<Session> showlist (int stdid, int subid) {
          ArrayList <Session> sessions = new ArrayList<>();
           try {
          String sql = "SELECT ses.sesid,ses.[index],ses.date,ses.attanded\n"
-                 + "                    	,g.gid,g.gname,g.sem,g.year\n"
-                 + "                    	,r.rid,r.rname\n"
-                 + "                    	,t.tid,t.[description]\n"
-                 + "                    	,l.lid,l.lname\n"
-                 + "                    	,sub.subid,sub.subname\n"
-                 + "                    	,s.stdid,s.stdname\n"
-                 + "                    	,ISNULL(a.present,0) present, ISNULL(a.[description],'') [description]\n"
-                 + "                    		FROM [Session] ses\n"
-                 + "                    		INNER JOIN Room r ON r.rid = ses.rid\n"
-                 + "                    		INNER JOIN TimeSlot t ON t.tid = ses.tid\n"
-                 + "                    		INNER JOIN Lecturer l ON l.lid = ses.lid\n"
-                 + "                    		INNER JOIN [Group] g ON g.gid = ses.gid\n"
-                 + "                    		INNER JOIN [Subject] sub ON sub.subid = g.subid\n"
-                 + "                   		    INNER JOIN [Student_Group] sg ON sg.gid = g.gid\n"
-                 + "                    		INNER JOIN [Student] s ON s.stdid = sg.stdid\n"
-                 + "                    		LEFT JOIN Attandance a ON s.stdid = a.stdid AND ses.sesid = a.sesid\n"
-                 + "                    WHERE s.stdid = ?\n"
-                 + "                    and ses.gid = ?\n"
-                 + "			and g.subid = ?";
+                      + "                    	,g.gid,g.gname,g.sem,g.year\n"
+                      + "                    	,r.rid,r.rname\n"
+                      + "                    	,t.tid,t.[description] tdescription\n"
+                      + "                    	,l.lid,l.lname\n"
+                      + "                    	,sub.subid,sub.subname\n"
+                      + "                    	,s.stdid,s.stdname\n"
+                      + "                    	,ISNULL(a.present,0) present, ISNULL(a.[description],'') [description]\n"
+                      + "                    		FROM [Session] ses\n"
+                      + "                    		INNER JOIN Room r ON r.rid = ses.rid\n"
+                      + "                    		INNER JOIN TimeSlot t ON t.tid = ses.tid\n"
+                      + "                    		INNER JOIN Lecturer l ON l.lid = ses.lid\n"
+                      + "                    		INNER JOIN [Group] g ON g.gid = ses.gid\n"
+                      + "                    		INNER JOIN [Subject] sub ON sub.subid = g.subid\n"
+                      + "                   		    INNER JOIN [Student_Group] sg ON sg.gid = g.gid\n"
+                      + "                    		INNER JOIN [Student] s ON s.stdid = sg.stdid\n"
+                      + "                    		LEFT JOIN Attandance a ON s.stdid = a.stdid AND ses.sesid = a.sesid\n"
+                      + "                    WHERE  s.stdid = ?\n"
+                      + "		        and sub.subid = ?\n"
+                      + "		    ORDER BY ses.[date], tdescription";
          
          PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, stdid);
-            stm.setInt(2, gid);
-            stm.setInt(3, subid);
+            stm.setInt(2, subid);
             ResultSet rs = stm.executeQuery();
             
             while(rs.next()){
@@ -163,7 +162,7 @@ public class SessionDBContext extends DBContext<Session>{
                 session.setRoom(r);
                 
                 t.setId(rs.getInt("tid"));
-                t.setDescription(rs.getString("description"));
+                t.setDescription(rs.getString("tdescription"));
                 session.setSlot(t);
                 
                 

@@ -36,8 +36,34 @@ public class GroupDBContext extends DBContext<Group>{
 
     @Override
     public Group get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = " select g.gid, g.gname,g.sem, g.year\n"
+                + "        from [Group] g\n"            
+                + "		where g.gid = ?";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                Group g = new Group(); 
+                        
+                g.setId(rs.getInt("gid"));
+                g.setName(rs.getString("gname"));
+                g.setSem(rs.getString("sem"));
+                g.setYear(rs.getInt("year"));
+                
+                return g;
+                        
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(GroupDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+        return null;
     }
+
+    
 
     public ArrayList<Group> list(int gid) {
         ArrayList<Group> groups = new ArrayList<>();

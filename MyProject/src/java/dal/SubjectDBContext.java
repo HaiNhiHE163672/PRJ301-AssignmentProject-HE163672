@@ -50,79 +50,21 @@ public class SubjectDBContext  extends DBContext<Subject>{
     public Subject get(int id) {
         try {
         String sql = "select su.subid, su.subname\n"
-                     + "      ,g.gid,g.gname,g.sem,g.year\n"
-                     + "	  ,std.stdid,std.stdname\n"
-                     + "	  ,l.lid,l.lname\n"
-                     + "	  ,ses.sesid, ses.[date], ses.attanded\n"
-                     + "	  ,t.tid, t.[description]\n"
-                     + "	  ,r.rid, r.rname\n"
-                     + "	  ,ISNULL(att.present,0) present, ISNULL(att.[description],'') [description]\n"
-                     + "       from Subject su\n"
-                     + "	                inner join [Group] g on su.subid = g.subid\n"
-                     + "			inner join Student_Group sg on sg.gid = g.gid\n"
-                     + "			inner join Lecturer l on l.lid = g.lid\n"
-                     + "			inner join Student std on std.stdid = sg.stdid\n"
-                     + "			inner join session ses on ses.gid = g.gid\n"
-                     + "			inner join TimeSlot t on t.tid = ses.tid\n"
-                     + "			inner join Room r on r.rid = ses.rid\n"
-                     + "			left join Attandance att on att.sesid = ses.sesid\n"
+                     + "       from [Subject] su\n"
                      + "      where su.subid = ?";
         
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, id); 
+            stm.setInt(1,id); 
             ResultSet rs = stm.executeQuery();
-            Subject sub = null;
+            
             while(rs.next()){
-                if (sub == null) {
-                sub = new Subject();
+                
+               Subject sub = new Subject();
 
                 sub.setId(rs.getInt("subid"));
                 sub.setName(rs.getString("subname"));
-                
-                }
-                
-                Student std = new Student();
-                std.setId(rs.getInt("stdid"));
-                std.setName(rs.getString("stdname"));                           
-                
-                Lecturer l = new Lecturer();
-                l.setId(rs.getInt("lid"));
-                l.setName(rs.getString("lname"));
-                
-                
-                Session ses = new Session();
-                ses.setId(rs.getInt("sesid"));
-                ses.setDate(rs.getDate("date"));
-                ses.setAttanded(rs.getBoolean("attanded"));
-                
-                
-                
-                TimeSlot t = new TimeSlot();
-                t.setId(rs.getInt("tid"));
-                t.setDescription(rs.getString("description"));
-                
-                
-                Room r = new Room();
-                r.setId(rs.getInt("rid"));
-                r.setName(rs.getString("rname"));
-                
 
-                Group g = new Group();
-                g.setId(rs.getInt("gid"));
-                g.setName(rs.getString("gname"));
-                g.setSem(rs.getString("sem"));
-                g.setYear(rs.getInt("year"));
-                sub.getGroups().add(g);
-                
-                   
-                Attandance a = new Attandance();
-                a.setStudent(std);
-                a.setSession(ses);
-                a.setPresent(rs.getBoolean("present"));
-                a.setDescription(rs.getString("description"));
-                ses.getAtts().add(a);
-
-                
+                return sub;
             }
             
         } catch (SQLException ex) {
@@ -134,14 +76,20 @@ public class SubjectDBContext  extends DBContext<Subject>{
 
     }
 
-    @Override
-    public ArrayList<Subject> list() {
+    public ArrayList<Subject> listByStdid(int stdid) {
          ArrayList<Subject> subjects = new ArrayList<>();
          
-         String sql = "select subid, subname from Subject";
+         String sql = "SELECT s.subid, s.subname\n"
+                + "                    FROM [Subject] s\n"
+                + "                	inner join [Group] g on s.subid = g.subid\n"
+                + "			inner join Student_Group sg on sg.gid = g.gid\n"
+                + "			inner join Student st on st.stdid = sg.stdid\n"
+                + "                    WHERE st.stdid = ?\n"
+                + "	GROUP BY s.subid, s.subname";
             
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, stdid);
             ResultSet rs = stm.executeQuery();
             while(rs.next()){
                 Subject sub = new Subject();
@@ -159,6 +107,11 @@ public class SubjectDBContext  extends DBContext<Subject>{
         }
             
         return subjects;
+    }
+
+    @Override
+    public ArrayList<Subject> list() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 

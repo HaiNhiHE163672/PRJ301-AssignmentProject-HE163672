@@ -15,11 +15,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.assignment.Attandance;
 import model.assignment.Group;
 import model.assignment.Session;
 import model.assignment.Student;
+import model.assignment.Subject;
 
 
 
@@ -45,26 +49,38 @@ public class AttListController extends HttpServlet {
         int stdid = Integer.parseInt(request.getParameter("stdid"));
         int gid = Integer.parseInt(request.getParameter("gid"));
         int subid = Integer.parseInt(request.getParameter("subid"));
-                
-        StudentDBContext stuDB = new StudentDBContext();
-        Student student = stuDB.get(stdid);
-        request.setAttribute("student", student);
-    
-        GroupDBContext groupDB = new GroupDBContext();
-        ArrayList<Group> groups = groupDB.list(gid);
-        request.setAttribute("groups", groups);
-
-
-        SessionDBContext sesDB = new SessionDBContext();       
-        ArrayList<Session> sessions = sesDB.showlist(stdid, gid,subid); 
-        request.setAttribute("sessions", sessions);
         
         
+            
+            StudentDBContext stuDB = new StudentDBContext();
+            Student student = stuDB.get(stdid);
+            request.setAttribute("student", student);
+            
+            
+            GroupDBContext groupDB = new GroupDBContext();
+            ArrayList<Group> groups = groupDB.list(gid);
+            Group group = groupDB.get(gid);
+            request.setAttribute("groups", groups);
+            request.setAttribute("group", group);
+            
+            
+            SessionDBContext sesDB = new SessionDBContext();
+            ArrayList<Session> sessions = sesDB.showlist(stdid,subid);
+            request.setAttribute("sessions", sessions);
+            
+            
+            SubjectDBContext subDB = new SubjectDBContext();
+            ArrayList<Subject> subjects = subDB.listByStdid(stdid);
+            Subject subject = subDB.get(subid);
+            request.setAttribute("subjects", subjects);
+            request.setAttribute("subject", subject);
+            
+            
+            AttandanceDBContext atDB = new AttandanceDBContext();
+            ArrayList<Attandance> atts = atDB.list(stdid);
+            request.setAttribute("atts", atts);
         
-        AttandanceDBContext atDB = new AttandanceDBContext();
-        ArrayList<Attandance> atts = atDB.list(stdid);
-        request.setAttribute("atts", atts);
-              
+     
         request.getRequestDispatcher("../view/student/attlist.jsp").forward(request, response);
     }
 
