@@ -15,6 +15,7 @@ public class Student {
     private String name;
     private ArrayList<Group> groups = new ArrayList<>();
     private ArrayList<Attandance> atts = new ArrayList<>();
+    private Account account;
 
     public int getId() {
         return id;
@@ -47,5 +48,14 @@ public class Student {
     public void setAtts(ArrayList<Attandance> atts) {
         this.atts = atts;
     }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+    
     
 }

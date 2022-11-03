@@ -12,6 +12,8 @@ public class Account {
     private String username;
     private String password;
     private String displayname;
+    private Student student;
+    private Lecturer lecturer;
 
     public String getUsername() {
         return username;
@@ -36,4 +38,21 @@ public class Account {
     public void setDisplayname(String displayname) {
         this.displayname = displayname;
     }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Lecturer getLecturer() {
+        return lecturer;
+    }
+
+    public void setLecturer(Lecturer lecturer) {
+        this.lecturer = lecturer;
+    }
+    
 }
