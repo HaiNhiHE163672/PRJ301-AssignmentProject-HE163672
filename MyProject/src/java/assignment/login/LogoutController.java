@@ -2,34 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package assignment.student;
+package assignment.login;
 
-import dal.AttandanceDBContext;
-import dal.GroupDBContext;
-import dal.SessionDBContext;
-import dal.StudentDBContext;
-import dal.SubjectDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import model.assignment.Attandance;
-import model.assignment.Group;
-import model.assignment.Session;
-import model.assignment.Student;
-import model.assignment.Subject;
-
-
-
 
 /**
  *
  * @author User
  */
-public class AttListController extends HttpServlet {
+public class LogoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,42 +29,9 @@ public class AttListController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        int stdid = Integer.parseInt(request.getParameter("stdid"));
-        int gid = Integer.parseInt(request.getParameter("gid"));
-        int subid = Integer.parseInt(request.getParameter("subid"));
-        
-        
-            
-            StudentDBContext stuDB = new StudentDBContext();
-            Student student = stuDB.get(stdid);
-            request.setAttribute("student", student);
-            
-            
-            GroupDBContext groupDB = new GroupDBContext();
-            ArrayList<Group> groups = groupDB.list(gid);
-            Group group = groupDB.get(gid);
-            request.setAttribute("groups", groups);
-            request.setAttribute("group", group);
-            
-            
-            SessionDBContext sesDB = new SessionDBContext();
-            ArrayList<Session> sessions = sesDB.showlist(stdid,subid);
-            request.setAttribute("sessions", sessions);
-            
-            
-            SubjectDBContext subDB = new SubjectDBContext();
-            ArrayList<Subject> subjects = subDB.listByStdid(stdid);
-            Subject subject = subDB.get(subid);
-            request.setAttribute("subjects", subjects);
-            request.setAttribute("subject", subject);
-            
-            
-            AttandanceDBContext atDB = new AttandanceDBContext();
-            ArrayList<Attandance> atts = atDB.list(stdid);
-            request.setAttribute("atts", atts);
-        
-     
-        request.getRequestDispatcher("../view/student/attlist.jsp").forward(request, response);
+        request.getSession().setAttribute("account", null);
+        response.getWriter().println("logout successful!");
+        response.sendRedirect("login.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -93,14 +46,7 @@ public class AttListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         processRequest(request, response);
-       
-        
-        
-        
-        
-        
     }
 
     /**
@@ -114,9 +60,7 @@ public class AttListController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         processRequest(request, response);   
-            
-            
+        processRequest(request, response);
     }
 
     /**
