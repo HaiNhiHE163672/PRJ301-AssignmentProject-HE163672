@@ -5,6 +5,7 @@
 package assignment.student;
 
 import assignment.login.BaseAuthenticationController;
+import dal.AccountDBContext;
 import dal.SessionDBContext;
 import dal.StudentDBContext;
 import dal.TimeSlotDBContext;
@@ -64,6 +65,9 @@ public class TimeTableController extends BaseAuthenticationController {
         request.setAttribute("year", DateTimeHelper.getYear(from) );
         request.setAttribute("dates", DateTimeHelper.getDateList(from,to));
 
+        AccountDBContext accDB = new AccountDBContext();
+        Account acc = accDB.get();
+        request.setAttribute("acc", acc);
         
         TimeSlotDBContext slotDB = new TimeSlotDBContext();
         ArrayList<TimeSlot> slots = slotDB.list();

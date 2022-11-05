@@ -170,14 +170,14 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="inputEmail3" name="user" value="${cookie.user.value}" placeholder="Username">
                                 <i class="fa fa-user"></i>
-                                ${requestScope.usermess}
+                                
                                 
                             </div>
                             <div class="form-group help">
                                 <input type="password" class="form-control" id="inputPassword3" name="pass" value="${cookie.pass.value}" placeholder="Password">
                                 <i class="fa fa-lock"></i>
                                 <a href="#" class="fa fa-question-circle"></a>
-                                ${requestScope.passmess}
+                                
                             </div>
                             <div class="form-group">
                                 <div class="main-checkbox">

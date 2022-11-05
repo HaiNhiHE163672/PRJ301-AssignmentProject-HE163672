@@ -176,12 +176,25 @@
                                name="present${a.student.id}" value="present" />Present</td>
                     <td><input type="text" name="description${a.student.id}" value="${a.description}" /></td>
                     <td>
-                        <p id="show image" onclick="show()">Show Image</p>
-                        <img src="../img/avatar.jpg" style="height:150px;width:150px;border-width:0px;"/> 
+                        <p id="show image" onclick="myFunction()">Show Image</p>
+                        <img id="image" src="../img/avatar.jpg" style="height:150px;width:150px;border-width:0px;"/> 
+                       
                     </td>
                 </tr>   
                     
                 </c:forEach>
+                    <script>
+                               document.getElementById("show image").addEventListener("click",myFunction);
+
+                               function myFunction() {
+                              var x = document.getElementById("image");
+                              if (x.style.display === "none") {
+                               x.style.display = "block";
+                               } else {
+                               x.style.display = "none";
+                              }
+                               }
+                    </script>
                         
                     </tbody>
                 </table>

@@ -107,10 +107,13 @@
 
             <div class="a">
                 <div class="a1">
-                    <a href="">
-                        <span>${requestScope.student.name}</span>
+                    <c:if test="${sessionScope.account != null}">
+                        <a href="">
+                        <span>${sessionScope.account.displayname}</span>
                     </a> | 
                     <a href="">logout</a> |
+                    </c:if>
+                    
                     <span> CAMPUS: FPTU-Hòa Lạc</span>
                 </div>
                 <div class="a2">
@@ -182,7 +185,7 @@
             <thead>
                 <tr>
                     <th rowspan="2">
-                        <form action="timetable" method="GET">
+                        <form action="timetable" method="POST">
                             <input type="hidden" name="stdid" value="${param.stdid}"/>
                             Year: <select name="yid">
                                 <option value="${year}">${year - 3}</option>

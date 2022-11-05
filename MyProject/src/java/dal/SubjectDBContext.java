@@ -45,6 +45,30 @@ public class SubjectDBContext  extends DBContext<Subject>{
     public void delete(Subject model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+     public Subject get() {
+         try {
+        String sql = "select subid, subname from [Subject]";
+        
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            
+            while(rs.next()){
+                
+               Subject sub = new Subject();
+
+                sub.setId(rs.getInt("subid"));
+                sub.setName(rs.getString("subname"));
+
+                return sub;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SubjectDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+         
+        return null;        
+     }
 
     @Override
     public Subject get(int id) {

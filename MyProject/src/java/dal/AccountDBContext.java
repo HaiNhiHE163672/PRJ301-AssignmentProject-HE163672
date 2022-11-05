@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.assignment.Account;
+import model.assignment.Lecturer;
+import model.assignment.Student;
 
 /**
  *
@@ -55,13 +57,48 @@ public class AccountDBContext extends DBContext<Account> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public Account get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Account get() {
+          try {
+            String sql = "select a.userid,a.pass, a.displayname\n"
+                    + "       ,ISNULL(s.stdid,'') stdid,ISNULL(s.stdname,'') stdname\n"
+                    + "	   ,ISNULL(l.lid,'') lid,ISNULL(l.lname,'') lname\n"
+                    + "       from Account a\n"
+                    + "       left join Student s on s.displayname = a.displayname\n"
+                    + "	   left join Lecturer l on l.displayname = a.displayname";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next())
+            {
+                Account account = new Account();
+                account.setUsername(rs.getString("userid"));
+                account.setPassword(rs.getString("pass"));
+                account.setDisplayname(rs.getString("displayname"));
+                
+               Student s = new Student();
+               s.setId(rs.getInt("stdid"));
+               s.setName(rs.getString("stdname"));
+               account.setStudent(s);
+               
+               Lecturer l = new Lecturer();
+               l.setId(rs.getInt("lid"));
+               l.setName(rs.getString("lname"));
+               account.setLecturer(l);
+               
+               return account;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
     public ArrayList<Account> list() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Account get(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

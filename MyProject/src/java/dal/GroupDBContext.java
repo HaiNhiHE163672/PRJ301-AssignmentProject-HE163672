@@ -33,6 +33,31 @@ public class GroupDBContext extends DBContext<Group>{
     public void delete(Group model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    public Group get() {
+        String sql = " select gid, gname,sem, year from [Group]";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                Group g = new Group(); 
+                        
+                g.setId(rs.getInt("gid"));
+                g.setName(rs.getString("gname"));
+                g.setSem(rs.getString("sem"));
+                g.setYear(rs.getInt("year"));
+                
+                return g;
+                        
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(GroupDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+        
+    }
+    
 
     @Override
     public Group get(int id) {
