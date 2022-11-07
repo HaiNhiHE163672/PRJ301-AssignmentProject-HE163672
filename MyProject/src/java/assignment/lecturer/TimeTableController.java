@@ -2,25 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package assignment.login;
+package assignment.lecturer;
 
-import dal.AccountDBContext;
-import dal.GroupDBContext;
-import dal.SubjectDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import model.assignment.Account;
-import model.assignment.Group;
-import model.assignment.Subject;
+
 /**
  *
  * @author User
  */
-public class HomeController extends HttpServlet {
+public class TimeTableController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,18 +29,18 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        AccountDBContext accDB = new AccountDBContext();
-        Account a = accDB.get();
-        request.setAttribute("a", a);
-        
-        GroupDBContext groupDB = new GroupDBContext();
-        Group g = groupDB.get();
-        request.setAttribute("g", g);
-        
-        SubjectDBContext subDB = new SubjectDBContext();
-        Subject s = subDB.get();
-        request.setAttribute("s", s);
-       request.getRequestDispatcher("home.jsp").forward(request, response);
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet TimeTableController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet TimeTableController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -111,14 +111,14 @@
                         <a href="">
                         <span>${sessionScope.account.displayname}</span>
                     </a> | 
-                    <a href="">logout</a> |
+                    <a href="../logout">logout</a> |
                     </c:if>
                     
                     <span> CAMPUS: FPTU-Hòa Lạc</span>
                 </div>
                 <div class="a2">
                     <span>
-                        <a href='#'>Home</a>|
+                        <a href='../home'>Home</a>|
                         <b>View Schedule</b>
                     </span>
                 </div>
@@ -127,7 +127,7 @@
             
             
         <div>
-            <h1>Activities for ${requestScope.student.name}</h1>  
+            <h1>Activities for ${sessionScope.account.displayname}</h1>  
         </div>
             <p>
         <b>Note</b>: These activities do not include extra-curriculum activities, such as
@@ -248,11 +248,11 @@
                     <ul>
                         <li>
                             (<font color="green">attended</font>):
-                            ${requestScope.student.name} had attended this activity / ${requestScope.student.name} đã tham gia hoạt động này.
+                            ${sessionScope.account.displayname} had attended this activity / ${sessionScope.account.displayname} đã tham gia hoạt động này.
                         </li>
                         <li>
                             (<font color="red">absent</font>):
-                            ${requestScope.student.name} had NOT attended this activity / ${requestScope.student.name} đã vắng mặt buổi này.
+                            ${sessionScope.account.displayname} had NOT attended this activity / ${sessionScope.account.displayname} đã vắng mặt buổi này.
                         </li>
                         <li>
                             (-): no data was given / chưa có dữ liệu.

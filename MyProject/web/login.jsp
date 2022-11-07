@@ -165,7 +165,7 @@
                         <form class="form-horizontal" action="login" method="POST" >
                             <span class="heading">Log In</span>
                             <p><font color="red">${requestScope.error}</font></p>
-                            <font color="green"><t:LoginTag/></font>
+                            
                             
                             <div class="form-group">
                                 <input type="text" class="form-control" id="inputEmail3" name="user" value="${cookie.user.value}" placeholder="Username">

@@ -39,7 +39,7 @@ public abstract class BaseAuthenticationController extends HttpServlet {
         }
         else
         {
-            response.sendRedirect("login");
+            response.sendRedirect("../home");
         }
     }
 
@@ -54,7 +54,7 @@ public abstract class BaseAuthenticationController extends HttpServlet {
         }
         else
         {
-            response.sendRedirect("login");
+            response.sendRedirect("../home");
         }
     }
 

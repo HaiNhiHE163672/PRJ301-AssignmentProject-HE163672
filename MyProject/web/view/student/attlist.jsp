@@ -68,7 +68,6 @@
                  .a {
                      margin-top:10px;
                      margin-bottom: 50px;
-                     background-color: rgb(193, 191, 191);
                      padding: 10px;
 
                  }
@@ -93,17 +92,13 @@
 
             <div class="a">
                 <div class="a1">
-                    <a href="">
-                        <span>${requestScope.student.name}</span>
+                   <c:if test="${sessionScope.account != null}">
+                        <a href="">
+                        <span>${sessionScope.account.displayname}</span>
                     </a> | 
-                    <a href="">logout</a> |
+                    <a href="../logout">logout</a> |
+                    </c:if>
                     <span> CAMPUS: FPTU-Hòa Lạc</span>
-                </div>
-                <div class="a2">
-                    <span>
-                        <a href='#'>Home</a>|
-                        <b>View Schedule</b>
-                    </span>
                 </div>
             </div>
             <style>

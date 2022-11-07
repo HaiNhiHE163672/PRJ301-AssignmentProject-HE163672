@@ -40,6 +40,43 @@ public class AttandanceDBContext extends DBContext<Attandance>{
     public Attandance get(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    public Attandance absent(int stdid) {
+        
+         try {
+            String sql = "select count(a.present) [absent]\n"
+                     + "                      from Attandance a\n"
+                     + "                      inner join Student s on s.stdid = a.stdid\n"
+                     + "                      where a.stdid = ?\n"
+                     + "		       and a.present = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, stdid);
+            stm.setInt(2, 0);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next())
+            {
+                Attandance att = new Attandance();
+                Session ses = new Session();
+                ses.setId(rs.getInt("sesid"));
+                ses.setIndex(rs.getInt("index"));
+                att.setSession(ses);
+                
+                Student s = new Student();
+                s.setId(rs.getInt("stdid"));
+                s.setName(rs.getString("stdname"));
+                att.setStudent(s);
+                
+                return att;
+
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AttandanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+        
+    }
 
     
     public ArrayList<Attandance> list(int stdid) {
