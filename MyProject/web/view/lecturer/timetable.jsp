@@ -1,9 +1,8 @@
 <%-- 
     Document   : timetable
-    Created on : Oct 13, 2022, 10:39:39 AM
+    Created on : Nov 8, 2022, 8:03:54 AM
     Author     : User
 --%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="helper" class="util.DateTimeHelper"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Timetable Student Page</title>
+        <title>JSP Page</title>
         <style>
             /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
@@ -37,10 +36,8 @@
 	font-size: 20px;
 }
         </style>
-
     </head>
     <body>
-        
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
@@ -107,12 +104,12 @@
 
             <div class="a">
                 <div class="a1">
-                    <c:if test="${sessionScope.account != null}">
+                    
                         <a href="">
-                        <span>${sessionScope.account.displayname}</span>
+                        <span>${requestScope.lecturer.name}</span>
                     </a> | 
                     <a href="../logout">logout</a> |
-                    </c:if>
+                    
                     
                     <span> CAMPUS: FPTU-Hòa Lạc</span>
                 </div>
@@ -123,30 +120,10 @@
                     </span>
                 </div>
             </div>
-            
-            
-            
-        <div>
-            <h1>Activities for ${sessionScope.account.displayname}</h1>  
-        </div>
-            <p>
-        <b>Note</b>: These activities do not include extra-curriculum activities, such as
-        club activities ...
-    </p>
-    <p>
-        <b>Chú thích</b>: Các hoạt động trong bảng dưới không bao gồm hoạt động ngoại khóa,
-        ví dụ như hoạt động câu lạc bộ ...
-    </p>
-    <div>
-                <p>Các phòng bắt đầu bằng AL thuộc tòa nhà Alpha. VD: AL...</p>
-                <p>Các phòng bắt đầu bằng BE thuộc tòa nhà Beta. VD: BE,..</p>
-                <p>Các phòng bắt đầu bằng G thuộc tòa nhà Gamma. VD: G201,...</p>
-                <p>Các phòng tập bằng đầu bằng R thuộc khu vực sân tập Vovinam.</p>
-                <p>Các phòng bắt đầu bằng DE thuộc tòa nhà Delta. VD: DE,..</p>
-                <p>Little UK (LUK) thuộc tầng 5 tòa nhà Delta</p>
-                    
-            </div>
-    
+                        <div>
+                            <h1>Activities for ${requestScope.lecturer.name}</h1>  
+                        </div>
+                          
     <style>
             .b table {
                 font-family: arial, sans-serif;
@@ -185,8 +162,8 @@
             <thead>
                 <tr>
                     <th rowspan="2">
-                        <form action="timetable" method="POST">
-                            <input type="hidden" name="stdid" value="${param.stdid}"/>
+                        <form action="ltimetable" method="GET">
+                            <input type="hidden" name="lid" value="${param.lid}"/>
                             Year: <select name="yid">
                                 <option value="${year}">${year - 3}</option>
                                 <option value="${year}">${year - 2}</option>
@@ -194,8 +171,8 @@
                                 <option selected="checked" value="${year}">${year}</option>
                                 <option value="${year}">${year + 1}</option>
                             </select><br/>
-                             From: <input type="date" name="from" value="${requestScope.from}"/>
-                             To: <input type="date" name="to" value="${requestScope.to}"/>
+                            From: <input type="date" name="from" value="${requestScope.from}"/>
+                            To: <input type="date" name="to" value="${requestScope.to}"/>
                             <input type="submit" value="View"/> 
                         </form>
                     </th>
@@ -212,8 +189,7 @@
                 
             </thead>
             <tbody>
- 
-                <c:forEach items="${requestScope.slots}" var="slot">
+         <c:forEach items="${requestScope.slots}" var="slot">
                     <tr>
                         <td>Slot ${slot.id}</td>  
                         <c:forEach items="${requestScope.dates}" var="d">
@@ -221,21 +197,11 @@
                             
                             <c:forEach items="${requestScope.sessions}" var="ses">
                                 <c:if test="${helper.compare(ses.date,d) eq 0 and (ses.slot.id eq slot.id)}">
-                                    <a href="att?id=${ses.id}">${ses.group.subject.name}</a>
+                                    <a href="takeatt?id=${ses.id}">${ses.group.subject.name}</a>
                                     <br/>
                                     at ${ses.room.name}
                                     <c:if test="${ses.attanded}">
-                                        <c:forEach items="${requestScope.atts}" var="a" >  
-                                            <c:if test="${ses.id eq a.session.id}">
-                                                <c:if test="${!a.present}">
-                                                    <p>(<font color=red>Absent</font>)</p>
-                                                </c:if>                
-                                                <c:if test="${a.present}">
-                                                <p>(<font color=green>Present</font>)</p>
-
-                                            </c:if>
-                                        </c:if>                             
-                              </c:forEach> 
+                                        <p>(<font color=green>Present</font>)</p> 
                                     </c:if>
                                     <c:if test="${!ses.attanded}">
                                         <p>(<font color="red">not yet</font>)</p>
@@ -253,24 +219,7 @@
                     
             </tbody>    
         </table>
-            <div class="c">
-                    <b>More note / Chú thích thêm</b>:
-                    <ul>
-                        <li>
-                            (<font color="green">attended</font>):
-                            ${sessionScope.account.displayname} had attended this activity / ${sessionScope.account.displayname} đã tham gia hoạt động này.
-                        </li>
-                        <li>
-                            (<font color="red">absent</font>):
-                            ${sessionScope.account.displayname} had NOT attended this activity / ${sessionScope.account.displayname} đã vắng mặt buổi này.
-                        </li>
-                        <li>
-                            (-): no data was given / chưa có dữ liệu.
-                        </li>
-                    </ul>
-                
-            </div>
-            <div>
+                     <div>
                 <b>Mọi góp ý, thắc mắc xin liên hệ</b>:
                 <span>Phòng dịch vụ sinh viên:</span> Email:
                 <a href="">dichvusinhvien@fe.edu.vn</a>.
@@ -279,8 +228,7 @@
             </div>
     
             
+        </div>
     </div>
-    </div>
-        
     </body>
 </html>

@@ -97,12 +97,12 @@
                     <a href="">
                         <span>${ses.lecturer.name}</span>
                     </a> | 
-                    <a href="">logout</a> |
+                    <a href="../logout">logout</a> |
                     <span> CAMPUS: FPTU-Hòa Lạc</span>
                 </div>
                 <div class="a2">
                     <span>
-                        <a href='#'>Home</a>|
+                        <a href='../home'>Home</a>|
                         <a href="">Take Attendance</a>|
                         <b>Add</b>
                         

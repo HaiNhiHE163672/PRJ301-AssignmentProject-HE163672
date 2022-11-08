@@ -62,7 +62,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TimeTableController</servlet-name>
-        <url-pattern>/lecturer/timetable</url-pattern>
+        <url-pattern>/lecturer/ltimetable</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

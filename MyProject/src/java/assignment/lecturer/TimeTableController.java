@@ -4,12 +4,21 @@
  */
 package assignment.lecturer;
 
+import dal.LecturerDBContext;
+import dal.SessionDBContext;
+import dal.TimeSlotDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Date;
+import model.assignment.Lecturer;
+import model.assignment.Session;
+import model.assignment.TimeSlot;
+import util.DateTimeHelper;
 
 /**
  *
@@ -28,19 +37,44 @@ public class TimeTableController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet TimeTableController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet TimeTableController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        int lid = Integer.parseInt(request.getParameter("lid"));
+        String raw_from = request.getParameter("from");
+        String raw_to = request.getParameter("to");
+        java.sql.Date from = null;
+        java.sql.Date to = null;
+        if(raw_from ==null || raw_from.length() ==0)
+        {
+            Date today = new Date();
+            int todayOfWeek = DateTimeHelper.getDayofWeek(today);
+            Date e_from = DateTimeHelper.addDays(today, 2 - todayOfWeek);
+            Date e_to = DateTimeHelper.addDays(today, 8-todayOfWeek);
+            from = DateTimeHelper.toDateSql(e_from);
+            to = DateTimeHelper.toDateSql(e_to);
         }
+        else
+        {
+            from = java.sql.Date.valueOf(raw_from);
+            to = java.sql.Date.valueOf(raw_to);
+        }
+        
+        request.setAttribute("from", from);
+        request.setAttribute("to", to);
+        request.setAttribute("year", DateTimeHelper.getYear(from));
+        request.setAttribute("dates", DateTimeHelper.getDateList(from, to));
+        
+        TimeSlotDBContext slotDB = new TimeSlotDBContext();
+        ArrayList<TimeSlot> slots = slotDB.list();
+        request.setAttribute("slots", slots);
+        
+        SessionDBContext sesDB = new SessionDBContext();
+        ArrayList<Session> sessions = sesDB.lecfilter(lid, from, to);
+        request.setAttribute("sessions", sessions);
+        
+        LecturerDBContext lecDB = new LecturerDBContext();
+        Lecturer lecturer = lecDB.get(lid);
+        request.setAttribute("lecturer", lecturer);
+        
+        request.getRequestDispatcher("../view/lecturer/timetable.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
