@@ -163,7 +163,8 @@
                     <td><a href="">${a.student.id}</a>
                     <input type="hidden" name="stdid" value="${a.student.id}"/>
                     </td>
-                    <td>${a.student.name}</td>                   
+                    <td><a href="../student/attlist?stdid=${a.student.id}&gid=${ses.group.id}&subid=${ses.group.subject.id}">${a.student.name}</a></td>  
+         
                     <td><input type="radio"
                                <c:if test="${!a.present}">
                                checked="checked"
