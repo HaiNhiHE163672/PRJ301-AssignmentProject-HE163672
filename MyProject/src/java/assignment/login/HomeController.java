@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import model.assignment.Account;
 import model.assignment.Group;
 import model.assignment.Subject;
@@ -39,7 +40,7 @@ public class HomeController extends BaseRolesController {
         request.setAttribute("a", a);
         
         GroupDBContext groupDB = new GroupDBContext();
-        Group g = groupDB.get();
+        Group g = groupDB.show();
         request.setAttribute("g", g);
         
         SubjectDBContext subDB = new SubjectDBContext();
@@ -54,12 +55,13 @@ public class HomeController extends BaseRolesController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
-        processRequest(req, resp);
+         processRequest(req, resp);
+        
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
-        processRequest(req, resp);
+         processRequest(req, resp);
     }
 
 }

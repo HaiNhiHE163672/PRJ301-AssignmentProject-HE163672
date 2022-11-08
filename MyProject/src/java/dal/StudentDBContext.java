@@ -98,10 +98,65 @@ public class StudentDBContext extends DBContext<Student> {
         return null;
 
     }
+    public ArrayList<Student> Show(int gid, int subid) {
+        ArrayList<Student> stus = new ArrayList<>();
+         String sql = "select s.stdid, s.stdname, g.gid, g.gname\n"
+                + "     from Student s\n"
+                + "    inner join Student_Group sg on sg.stdid = s.stdid\n"
+                + "	inner join [Group] g on g.gid = sg.gid\n"
+                + "	inner join [Subject] su on su.subid = g.subid \n"
+                + "	where g.gid = ? and su.subid = ?";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, gid);
+            stm.setInt(2, subid);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                Student s = new Student();
+                s.setId(rs.getInt("stdid"));
+                s.setName(rs.getString("stdname"));
+                
+                Group g = new Group();
+                g.setId(rs.getInt("gid"));
+                g.setName(rs.getString("gname"));
+                s.getGroups().add(g);
+                
+                stus.add(s);            
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+        return stus;
+         
+
+    }
+    
 
     @Override
     public ArrayList<Student> list() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<Student> stus = new ArrayList<>();
+         String sql = "select stdid, stdname from Student";
+         try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                Student s = new Student();
+                s.setId(rs.getInt("stdid"));
+                s.setName(rs.getString("stdname"));
+                stus.add(s);            
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+        return stus;
+         
+
     }
 
 }

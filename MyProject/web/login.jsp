@@ -167,7 +167,7 @@
                             <p><font color="red">${requestScope.error}</font></p>
                             
                             
-                            <div class="form-group">
+                             <div class="form-group">
                                 <input type="text" class="form-control" id="inputEmail3" name="user" value="${cookie.user.value}" placeholder="Username">
                                 <i class="fa fa-user"></i>
                                 
@@ -188,13 +188,7 @@
                                 <button type="submit" class="btn btn-default" id="myBtn">log in</button>
                             </div>
                         </form>
-                        <script>
-                            document.getElementById("myBtn").addEventListener("click",myFunction);
 
-                            function myFunction() {
-                                alert("Are you sure?");
-                            }
-                        </script>
                     </div>
                 </div>
             </div>

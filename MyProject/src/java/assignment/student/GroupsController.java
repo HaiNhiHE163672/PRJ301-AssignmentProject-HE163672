@@ -2,25 +2,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package assignment.login;
+package assignment.student;
 
-import dal.AccountDBContext;
+import assignment.login.BaseAuthenticationController;
+import dal.GroupDBContext;
+import dal.SessionDBContext;
 import dal.StudentDBContext;
+import dal.SubjectDBContext;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import model.assignment.Account;
+import model.assignment.Group;
+import model.assignment.Session;
 import model.assignment.Student;
+import model.assignment.Subject;
 
 /**
  *
  * @author User
  */
-public class LoginController extends HttpServlet {
+public class GroupsController extends BaseAuthenticationController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,8 +39,35 @@ public class LoginController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        
+        int subid = Integer.parseInt(request.getParameter("subid"));
+        int gid = Integer.parseInt(request.getParameter("gid"));
+        
+        GroupDBContext groupDB = new GroupDBContext();
+            ArrayList<Group> groups = groupDB.listByGid(gid);
+            ArrayList<Group> groupss = groupDB.listBySubid(subid);
+            Group group = groupDB.getId(gid);
+            request.setAttribute("groupss", groupss);
+            request.setAttribute("groups", groups);
+            request.setAttribute("group", group);
 
+            
+             ArrayList<Group> gr = groupDB.listById(gid);
+             request.setAttribute("gr", gr);
+             
+            
+            SubjectDBContext subDB = new SubjectDBContext();
+            ArrayList<Subject> subjects = subDB.list();
+            Subject subject = subDB.get(subid);
+            request.setAttribute("subjects", subjects);
+            request.setAttribute("subject", subject);
+            
+            StudentDBContext stuDB = new StudentDBContext();
+            ArrayList<Student> students = stuDB.Show(gid,subid);
+            request.setAttribute("students", students);
+            
+            
+            request.getRequestDispatcher("../view/student/group.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,8 +82,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("login.jsp");
-
+        processRequest(request, response);
     }
 
     /**
@@ -64,42 +96,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String u = request.getParameter("user");
-        String p = request.getParameter("pass");
-        String r = request.getParameter("remember");
-        AccountDBContext db = new AccountDBContext();
-        Account account = db.get(u, p);
-
-        if (account == null) {
-            request.setAttribute("error", "login failed!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
-        if (account != null) {
-            Cookie username = new Cookie("user", u);
-            Cookie password = new Cookie("pass", p);
-            Cookie rem = new Cookie("remember", r);
-            if (r == null) {
-                username.setMaxAge(0);
-                password.setMaxAge(0);
-                rem.setMaxAge(0);
-
-            } else {
-                username.setMaxAge(60 * 60);// 1h
-                password.setMaxAge(60 * 60); // 1h
-                rem.setMaxAge(60 * 60); // 1h
-            }
-            response.addCookie(username);
-            response.addCookie(password);
-            response.addCookie(rem);
-            request.getSession().setAttribute("account", account);
-            
-            response.sendRedirect("home");
-            
-
-            response.getWriter().println("login successful!");
-        
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -111,5 +108,16 @@ public class LoginController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
+        processRequest(req, resp);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
+        processRequest(req, resp);
+
+    }
 
 }

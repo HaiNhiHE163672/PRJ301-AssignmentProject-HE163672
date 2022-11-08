@@ -57,7 +57,7 @@ public class AttListController extends BaseAuthenticationController {
             
             
             GroupDBContext groupDB = new GroupDBContext();
-            ArrayList<Group> groups = groupDB.list(gid);
+            ArrayList<Group> groups = groupDB.listByGid(gid);
             Group group = groupDB.get(gid);
             request.setAttribute("groups", groups);
             request.setAttribute("group", group);

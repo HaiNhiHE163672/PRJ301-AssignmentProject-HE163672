@@ -36,6 +36,10 @@
         <servlet-name>TimeTableController</servlet-name>
         <servlet-class>assignment.lecturer.TimeTableController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GroupsController</servlet-name>
+        <servlet-class>assignment.student.GroupsController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>StudentTimetableController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>TimeTableController</servlet-name>
         <url-pattern>/lecturer/ltimetable</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GroupsController</servlet-name>
+        <url-pattern>/student/group</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,17 +1,16 @@
 <%-- 
-    Document   : attlist
-    Created on : Oct 21, 2022, 10:31:16 AM
+    Document   : group
+    Created on : Nov 8, 2022, 3:33:02 PM
     Author     : User
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="helper" class="util.DateTimeHelper"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Attendance Report Page</title>
+        <title>Group Page</title>
          <style>
             /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
@@ -39,7 +38,7 @@
         </style>
     </head>
     <body>
-                 <div class="container">
+        <div class="container">
             <div class="row">
                 <div class="col-md-8">
                     <h1><span>FPT University Academic Portal</span> </h1>
@@ -127,13 +126,7 @@
             </style>
             
                 <div class="row">
-                    
-                    <form action="attlst" method="POST">
-                        
-                    
-                    
-                <div class="col-md-6">
-                    
+                    <div class="col-md-6">
                     <div class='b'>
                         
                         <table>
@@ -154,6 +147,7 @@
                          <th scope='col'>Campus/program</th>
                         <th scope='col'>Term</th>
                         <th scope='col'>Course</th>
+                        <th scope='col'>Group</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -169,44 +163,54 @@
                                 </td>
                                 <td valign='top'>
                                     <div id="ctl00_mainContent_divTerm">
-                                        
-                                            <table>
-                                                <c:forEach items="${requestScope.groups}" var="g">
 
-                                                    <tr>
+                                        <table>
+                                            <c:forEach items="${requestScope.groups}" var="g">
 
-                                                        <td><a href="attlist?stdid=${student.id}&gid=${g.id}&subid=${subject.id}">${g.sem}${g.year}</a></td>
+                                                <tr>
 
-                                                    </tr>
-                                                
+                                                    <td><a href="group?gid=${g.id}&subid=${subject.id}">${g.sem}${g.year}</a></td>
+
+                                                </tr>
                                                  </c:forEach> 
-                                            </table>
-                                            <td valign='top'>
+                                                </table>
+                                        <td valign='top'>
                                                 <div id="ctl00_mainContent_divCourse">
                                                     <table>
-
-                                                        <c:forEach items="${requestScope.subjects}" var="sub">
+                                                           <c:forEach items="${requestScope.subjects}" var="sub">
                                                             <tr>
                                                                 <td>
                                                                     
-                                                                    <a href="attlist?stdid=${student.id}&gid=${group.id}&subid=${sub.id}">${sub.name}</a>
+                                                                    <a href="group?gid=${group.id}&subid=${sub.id}">${sub.name}</a>
                                                                 </td>
                                                             </tr> 
                                                             
                                                             </c:forEach> 
+                                                           
                                                     </table>
+                                            <td valign='top'>
+                                                <div id="ctl00_mainContent_divCourse">
+                                                    <table>
+                                                           <c:forEach items="${requestScope.groupss}" var="gs">
+                                                            <tr>
+                                                                <td>
+                                                                    
+                                                                    <a href="group?gid=${gs.id}&subid=${subject.id}">${gs.name}</a>
+                                                                </td>
+                                                            </tr> 
                                                             
-                                                                
-                                        
+                                                            </c:forEach> 
+                                                           
+                                                    </table>
+
+                                           
+                                        </table>
                                     </div>
-                                </td>
                         </tbody>
-                                           
                     </table>
-                                         
-                        </div>
-                                           
-                </div>
+                    </div>
+                    </div>            
+                          
             
             
                     <div class="col-md-6">
@@ -225,56 +229,26 @@
              <thead>
              <tr>    
              <th>No.</th>
-             <th>Date</th>
-             <th>Slot</th>
-             <th>Room</th>
-             <th>Lecturer</th>
-             <th>Group Name</th>
-             <th>Attadance status</th>
-             <th>Lecturer's comment</th>             
+             <th>Image</th>
+             <th>Name</th>
+             <th>Code</th>            
              
              </tr>
              </thead>
              <tbody>
-                 
-                 <c:forEach items="${requestScope.sessions}" var="ses" varStatus="loop">
-                         <tr>
-                     <td>${loop.index+1}</td>
-                     <td><span class='label label-primary'>${helper.getDayNameofWeek(ses.date)} ${ses.date}</span></td>
-                     <td><span class='label label-danger'>${ses.slot.id}_(${ses.slot.description})</span></td>
-                     <td>${ses.room.name}</td>
-                     <td>${ses.lecturer.name}</td>
-                     <td>${ses.group.name}</td>
-                                                                  
-                                            
-                                
-                             <c:if test="${ses.attanded}">
-                                 <c:forEach items="${requestScope.atts}" var="a" >  
-                                     <c:if test="${ses.index eq a.session.index}">
-                                 <c:if test="${!a.present}">
-                                    <td><font color=red>Absent</font> </td> 
-                               </c:if>                
-                               <c:if test="${a.present}">
-                                   <td><font color=green>Present</font></td> 
-                                   
-                               </c:if>
-                                   <td>${a.description}</td> 
-                               </c:if>
-                              
-                              </c:forEach> 
-                              </c:if>
-                                    
-                             <c:if test="${!ses.attanded}">
-                                
-                                 <td><p><font>Future</font></p></td> 
-                                 <td></td>
-  
-                         </c:if>
+                 <c:forEach items="${requestScope.students}" var="s" varStatus="loop">
+    
+                     <tr>
+                         <td>${loop.index+1}</td>
+                         <td>
+                             <img id="image" src="../img/avatar.jpg" style="height:150px;width:150px;border-width:0px;"/> 
 
+                         </td>
+                         <td>${s.name}</td>
+                         <td>${s.id}</td>
+                     </tr>
+                 </c:forEach>
                  
-                 </tr>
-                     
-                     </c:forEach>
 </tbody>
                 </table>  
                                         
@@ -285,22 +259,8 @@
                     
                         
                     </div>
-                              </form>                 
-
-            </div>
-    
-   
-                
-            <div>
-                <b>Mọi góp ý, thắc mắc xin liên hệ</b>:
-                <span>Phòng dịch vụ sinh viên:</span> Email:
-                <a href="">dichvusinhvien@fe.edu.vn</a>.
-                <span> Điện thoại</span>: 09290133454
-                
-            </div>
-                
-            
-            
+                        </div>                           
+                                                        
         </div>
     </body>
 </html>

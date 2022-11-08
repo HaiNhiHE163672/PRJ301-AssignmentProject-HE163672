@@ -109,7 +109,7 @@
                 <div class="a1">
                     <c:if test="${sessionScope.account != null}">
                         <a href="">
-                        <span>${sessionScope.account.displayname}</span>
+                            <span>${sessionScope.account.displayname}</span>
                     </a> | 
                     <a href="../logout">logout</a> |
                     </c:if>
@@ -185,7 +185,7 @@
             <thead>
                 <tr>
                     <th rowspan="2">
-                        <form action="timetable" method="POST">
+                        <form action="timetable" method="GET">
                             <input type="hidden" name="stdid" value="${param.stdid}"/>
                             Year: <select name="yid">
                                 <option value="${year}">${year - 3}</option>
@@ -221,7 +221,7 @@
                             
                             <c:forEach items="${requestScope.sessions}" var="ses">
                                 <c:if test="${helper.compare(ses.date,d) eq 0 and (ses.slot.id eq slot.id)}">
-                                    <a href="att?id=${ses.id}">${ses.group.subject.name}</a>
+                                    <a href="group?gid=${ses.group.id}&subid=${ses.group.subject.id}">${ses.group.subject.name}</a>
                                     <br/>
                                     at ${ses.room.name}
                                     <c:if test="${ses.attanded}">
